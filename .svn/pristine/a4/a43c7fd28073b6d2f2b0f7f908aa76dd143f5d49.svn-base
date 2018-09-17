@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using AppUtility;
+using BusinessLogic.Common;
+using BusinessLogic.Download;
+using HDWLogic;
+
+namespace BusinessLogic.SortingTask
+{
+
+    public class SortingLineTaskQueue
+    {
+        private static SortingLineTaskQueue _sortingLineTaskQueue;
+
+        public static SortingLineTaskQueue GetInstance()
+        {
+            if (_sortingLineTaskQueue == null)
+            {
+                _sortingLineTaskQueue = new SortingLineTaskQueue();
+            }
+            return _sortingLineTaskQueue;
+        }
+
+        public SortingLineTaskQueue()
+        {
+            SortingLineTasks = new Queue<SortingLineTask>();
+            SortingSubLineList sortingSubLineList = SortingSubLineList.GetSubSortingLineList();
+            QueueMaxCount = sortingSubLineList.Count;
+        }
+
+        public int QueueMaxCount { get; set; }
+
+        public Queue<SortingLineTask> SortingLineTasks { get; set; }
+
+        public Dictionary<string,Cube> Cubes { get; set; }
+
+        /// <summary>
+        /// 获取状态为已下达的任务，构建小车的列表数据
+        /// </summary>
+        /// <returns></returns>
+        public Queue<SortingLineTask> LoadSortingLineTasks()
+        {
+            SortingLineTasks.Clear();
+            SortingLineTaskList sortingLineTaskList = SortingLineTaskList.GetFinSortingLineTaskList(new QueryCondition("1", true, AppUtil._SortingLineId,"asc"));
+            foreach (SortingLineTask sortingLineTask in sortingLineTaskList)
+            {
+                this.Enqueue(sortingLineTask);
+                //SortingLineTasks.Enqueue(sortingLineTask);
+            }
+            
+            //生成界面上需要显示的小车列表
+            return SortingLineTasks;
+        }
+
+        /// <summary>
+        /// 将任务对象加入到分拣队列
+        /// </summary>
+        /// <param name="sortingLineTask"></param>
+        public void Enqueue(SortingLineTask sortingLineTask)
+        {
+            while (SortingLineTasks.Count >= QueueMaxCount)
+            {
+                SortingLineTasks.Dequeue();
+            }
+            SortingLineTasks.Enqueue(sortingLineTask);
+        }
+
+
+        /// <summary>
+        /// 根据SortingLineTasks任务列表的数据建立小车模型
+        /// </summary>
+        public void GetCubes()
+        {
+            Cubes = new Dictionary<string, Cube>();
+            SortingLineTask[] sortingLineTaskses = SortingLineTasks.ToArray();
+            Array.Reverse(sortingLineTaskses);
+            for (int i = 0; i < SortingLineTasks.Count; i++)
+            {
+                Cube cube = new Cube();
+                cube.Customername = sortingLineTaskses[i].ShortName;
+                cube.Indexno = sortingLineTaskses[i].INDEXNO;
+                cube.FinSortingLineTaskDetails = sortingLineTaskses[i].SortingLineTaskDetails;//.GetLessAreaDetails(i + 1);
+                cube.TotCignum = sortingLineTaskses[i].SumOrderNumber();
+                foreach (SortingLineTaskDetail finSortingLineTaskDetail in cube.FinSortingLineTaskDetails)
+                {
+                    cube.FinCignum += finSortingLineTaskDetail.QTY;
+                }
+                Cubes.Add((i+1).ToString(),cube);
+            }
+        }
+    }
+}

@@ -1,0 +1,145 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using DevComponents.DotNetBar;
+using PlcContract;
+
+namespace MonitorMain.CustomContorl
+{
+    public partial class OpcItemList : UserControl
+    {
+        public OpcItemList()
+        {
+            InitializeComponent();
+        }
+
+        private void OpcItemList_Load(object sender, EventArgs e)
+        {
+            listView1.Columns.Add("address");
+            listView1.GridLines = true;//显示网格线
+            listView1.FullRowSelect = true;//是否全行选择
+            listView1.HideSelection = false;//失去焦点时显示选择的项
+            
+            listView1.MultiSelect = false;//设置只能单选
+            listView1.View = View.Details;
+
+            ListViewGroup group1 = new ListViewGroup();
+            group1.Header = "DB1";
+            group1.HeaderAlignment = HorizontalAlignment.Center;
+
+            ListViewGroup group6 = new ListViewGroup();
+            group6.Header = "DB6";
+            group6.HeaderAlignment = HorizontalAlignment.Center;
+
+            ListViewGroup group10 = new ListViewGroup();
+            group10.Header = "DB10";
+            group10.HeaderAlignment = HorizontalAlignment.Center;
+
+            ListViewGroup group15 = new ListViewGroup();
+            group15.Header = "DB15";
+            group15.HeaderAlignment = HorizontalAlignment.Center;
+
+            ListViewGroup group51 = new ListViewGroup();
+            group51.Header = "DB51";
+            group51.HeaderAlignment = HorizontalAlignment.Center;
+
+            ListViewGroup group52 = new ListViewGroup();
+            group52.Header = "DB52";
+            group52.HeaderAlignment = HorizontalAlignment.Center;
+
+            ListViewGroup group54 = new ListViewGroup();
+            group54.Header = "DB54";
+            group54.HeaderAlignment = HorizontalAlignment.Center;
+
+            string items = OperateOpcAndSoft.ItemList();
+            string[] arr = items.Split('|');
+            
+            foreach (string item in arr)
+            {
+                ListViewItem view = null;
+                if (item.Contains(group1.Header + ","))
+                {
+                    view = new ListViewItem(item, 0, group1);
+                }
+                else if (item.Contains(group10.Header + ","))
+                {
+                    view = new ListViewItem(item, 0, group10);
+                }
+                else if (item.Contains(group15.Header + ","))
+                {
+                    view = new ListViewItem(item, 0, group15);
+                }
+                else if (item.Contains(group6.Header + ","))
+                {
+                    view = new ListViewItem(item, 0, group6);
+                }
+                else if (item.Contains(group51.Header + ","))
+                {
+                    view = new ListViewItem(item, 0, group51);
+                }
+                else if (item.Contains(group52.Header + ","))
+                {
+                    view = new ListViewItem(item, 0, group52);
+                }
+                else if (item.Contains(group54.Header + ","))
+                {
+                    view = new ListViewItem(item, 0, group54);
+                }
+                else
+                {
+                    view = new ListViewItem(item);
+                    view.Text = item;
+                }
+                listView1.Items.Add(view);
+            }
+            group1.Header = "上位下达配送任务：DB1";
+            group10.Header = "与上位联动,交互信号：DB10";
+            group15.Header = "虚出口任务区：DB15";
+            group6.Header = "分拣单元应分拣条烟数量 DB6";
+            group51.Header = "上位下达配送任务：DB51";
+            group52.Header = "补货任务区：DB52";
+            group54.Header = "卧式仓补货品规(条码):DB54";
+
+            listView1.Groups.Add(group1);
+            listView1.Groups.Add(group6);
+            listView1.Groups.Add(group10);
+            listView1.Groups.Add(group15);
+            listView1.Groups.Add(group51);
+            listView1.Groups.Add(group52);
+            listView1.Groups.Add(group54);
+
+            listView1.Columns[0].TextAlign = HorizontalAlignment.Center;
+            listView1.Columns[0].Width = -1;
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                PlcValue value = OperateOpcAndSoft.plc.GetPlcValue(listView1.SelectedItems[0].Text);
+                textBox1.Text = value.Value.ToString();
+                textBox2.Text = value.Quality.ToString();
+                textBox3.Text = value.objectTimeStamp.ToString();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PlcValue value = new PlcValue();
+                value.Value = textBox6.Text;
+                OperateOpcAndSoft.plc.SetPlcValue(listView1.SelectedItems[0].Name, value);
+            }
+            catch
+            {
+                MessageBox.Show("error");
+            }
+        }
+    }
+}

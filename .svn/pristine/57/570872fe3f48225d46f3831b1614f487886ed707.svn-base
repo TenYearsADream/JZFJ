@@ -1,0 +1,162 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using BusinessLogic.Messages;
+using Csla;
+using Csla.Data;
+using MySql.Data.MySqlClient;
+
+namespace BusinessLogic.Log
+{
+    
+    [Serializable]
+    public class MonitorLogList : ReadOnlyListBase<MonitorLogList, MonitorLogInfo>
+    {
+        #region  Factory Methods
+
+        public static MonitorLogList GetMonitorLogList(MonitorLogCriteria monitorLogCriteria)
+        {
+            return DataPortal.Fetch<MonitorLogList>(monitorLogCriteria);
+        }
+
+        public static List<string> GetLocationName()
+        {
+            List<string> locationnames = new List<string>();
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText =
+                        "SELECT DISTINCT(LOGLOCATION) FROM T_MONITORLOG";
+                    
+                    using (var dr = new SafeDataReader(cm.ExecuteReader()))
+                    {
+                        while (dr.Read())
+                        locationnames.Add(dr.GetString("LOGLOCATION"));
+                    }
+                }
+            }
+            return locationnames;
+        }
+
+        public static List<MonitorLogType> GetTypes()
+        {
+            List<MonitorLogType> monitorLogTypes = new List<MonitorLogType>();
+            monitorLogTypes.Add(new MonitorLogType(-1,""));
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText =
+                        "SELECT DISTINCT(Logtype) FROM T_MONITORLOG";
+
+                    using (var dr = new SafeDataReader(cm.ExecuteReader()))
+                    {
+                        while (dr.Read())
+                        monitorLogTypes.Add(new MonitorLogType(dr.GetInt32("Logtype"), GetTypeName(dr.GetInt32("Logtype"))));
+                    }
+                }
+            }
+            return monitorLogTypes;
+        }
+
+        public static string GetTypeName(int logtype)
+        {
+
+            if (logtype == 0)
+                {
+                    return "Info";
+                }
+            if (logtype == 1)
+                {
+                    return "Alert";
+                }
+            if (logtype == 2)
+                {
+                    return "Error";
+                }
+                return "";
+        }
+
+
+        private MonitorLogList()
+        {
+            /* require use of factory methods */
+        }
+
+        #endregion
+
+        #region  Data Access
+
+        private void DataPortal_Fetch(MonitorLogCriteria monitorLogCriteria)
+        {
+            RaiseListChangedEvents = false;
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText =
+                        "SELECT * FROM T_MONITORLOG where CreateTime > @createdate and CreateTime < @adddate";
+                    if (!string.IsNullOrEmpty(monitorLogCriteria.LogInfo))
+                    {
+                        cm.CommandText += "and (LogName like '%@logname%' or LogInfo like '%@logname%'";
+                        cm.Parameters.AddWithValue("@logname", monitorLogCriteria.LogInfo);
+                    }
+                    if (!string.IsNullOrEmpty(monitorLogCriteria.LogLocagtion))
+                    {
+                        cm.CommandText += "and (LOGLOCATION like '%@LogLocagtion%' or LogInfo like '%@logname%'";
+                        cm.Parameters.AddWithValue("@LogLocagtion", monitorLogCriteria.LogLocagtion);
+                    }
+
+                    if (monitorLogCriteria.LogType != -1)
+                    {
+                        cm.CommandText += "and Logtype = @logtype";
+                        cm.Parameters.AddWithValue("@logtype", monitorLogCriteria.LogType);
+                    }
+                    cm.Parameters.AddWithValue("@createdate", monitorLogCriteria.CreateDate);
+                    cm.Parameters.AddWithValue("@adddate", monitorLogCriteria.AddDate);
+                    
+
+                    using (var dr = new SafeDataReader(cm.ExecuteReader()))
+                    {
+                        IsReadOnly = false;
+                        while (dr.Read())
+                            Add(new MonitorLogInfo(dr));
+                        IsReadOnly = true;
+                    }
+                }
+            }
+            RaiseListChangedEvents = true;
+        }
+
+        #endregion
+    }
+
+    public class MonitorLogCriteria
+    {
+        public string CreateDate { get; set; }
+        public string AddDate { get; set; }
+        public int LogType { get; set; }
+        public string LogInfo { get; set; }
+        public string LogLocagtion { get; set; }
+    }
+
+    public class MonitorLogType
+    {
+        public MonitorLogType(int logtype,string logname)
+        {
+            LogType = logtype;
+            LogName = logname;
+        }
+
+        public string LogName { get; set; }
+        public int LogType { get; set; }
+    }
+
+    
+}

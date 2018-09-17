@@ -1,0 +1,196 @@
+﻿// ########file = SortingLineTaskDetail.cs#############
+// ########author = "祝旻" ##############
+// ########created = 20140728#############
+using System;
+using Csla;
+using Csla.Data;
+using MySql.Data.MySqlClient;
+
+namespace BusinessLogic.SortingTask
+{
+    [Serializable]
+    public class SortingLineTaskDetail : BusinessBase<SortingLineTaskDetail>
+    {
+        #region  Business Methods
+
+        private static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.ID, "标识号");
+
+        private static readonly PropertyInfo<string> SORTINGTASKNOProperty = RegisterProperty<string>(p => p.SORTINGTASKNO,
+                                                                                                "主任务编号");
+
+        private static readonly PropertyInfo<string> ORDERDATEProperty = RegisterProperty<string>(p => p.ORDERDATE,
+                                                                                                  "订单日期");
+
+        private static readonly PropertyInfo<string> SUBLINECODEProperty = RegisterProperty<string>(
+            p => p.SUBLINECODE, "子线编号");
+
+        private static readonly PropertyInfo<string> SUBLINENAMEProperty = RegisterProperty<string>(
+            p => p.SUBLINENAME, "子线名称");
+
+        private static readonly PropertyInfo<string> LINEBOXCODEProperty = RegisterProperty<string>(p => p.LINEBOXCODE, "烟道代码");
+
+        private static readonly PropertyInfo<string> LINEBOXNAMEProperty = RegisterProperty<string>(p => p.LINEBOXNAME, "烟道名称");
+
+        private static readonly PropertyInfo<string> ADDRESSCODEProperty = RegisterProperty<string>(
+            p => p.ADDRESSCODE, "烟仓地址码");
+
+
+        private static readonly PropertyInfo<int> QTYProperty = RegisterProperty<int>(p => p.QTY, "卷烟数量");
+
+        private static readonly PropertyInfo<string> CIGCODEProperty = RegisterProperty<string>(p => p.CIGCODE, "卷烟代码");
+
+        private static readonly PropertyInfo<string> CIGNAMEProperty = RegisterProperty<string>(p => p.CIGNAME, "卷烟名称");
+
+        public string ID
+        {
+            get { return GetProperty(IdProperty); }
+            set { SetProperty(IdProperty, value); }
+        }
+
+        public string SORTINGTASKNO
+        {
+            get { return GetProperty(SORTINGTASKNOProperty); }
+            set { SetProperty(SORTINGTASKNOProperty, value); }
+        }
+
+        public string ORDERDATE
+        {
+            get { return GetProperty(ORDERDATEProperty); }
+            set { SetProperty(ORDERDATEProperty, value); }
+        }
+
+        public string SUBLINECODE
+        {
+            get { return GetProperty(SUBLINECODEProperty); }
+            set { SetProperty(SUBLINECODEProperty, value); }
+        }
+
+        public string SUBLINENAME
+        {
+            get { return GetProperty(SUBLINENAMEProperty); }
+            set { SetProperty(SUBLINENAMEProperty, value); }
+        }
+
+        public string LINEBOXCODE
+        {
+            get { return GetProperty(LINEBOXCODEProperty); }
+            set { SetProperty(LINEBOXCODEProperty, value); }
+        }
+
+        public string LINEBOXNAME
+        {
+            get { return GetProperty(LINEBOXNAMEProperty); }
+            set { SetProperty(LINEBOXNAMEProperty, value); }
+        }
+
+        public string ADDRESSCODE
+        {
+            get { return GetProperty(ADDRESSCODEProperty); }
+            set { SetProperty(ADDRESSCODEProperty, value); }
+        }
+
+        public Int32 QTY
+        {
+            get { return GetProperty(QTYProperty); }
+            set { SetProperty(QTYProperty, value); }
+        }
+
+        public string CIGCODE
+        {
+            get { return GetProperty(CIGCODEProperty); }
+            set { SetProperty(CIGCODEProperty, value); }
+        }
+
+        public string CIGNAME
+        {
+            get { return GetProperty(CIGNAMEProperty); }
+            set { SetProperty(CIGNAMEProperty, value); }
+        }
+
+
+        public static int GetSortingLineBoxCigNumber(int lineboxid)
+        {
+            int count;
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText = "SELECT COUNT(*) as count FROM ( SELECT DISTINCT(CIGNAME) FROM t_sorting_line_detail_task WHERE LINEBOXCODE = " + lineboxid + ") a";                    
+                    count = Convert.ToInt32(cm.ExecuteScalar());
+                }
+            }
+            return count;
+        }
+
+        public static string GetSortingLineBoxCigName(int lineboxid)
+        {
+
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText = "SELECT DISTINCT(CIGNAME) FROM t_sorting_line_detail_task WHERE LINEBOXCODE = " + lineboxid;
+                    using (var dr = new SafeDataReader(cm.ExecuteReader()))
+                    {
+                        while (dr.Read())
+                        {
+                            return dr.GetString("CIGNAME");
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        #endregion
+
+        #region  Business Rules
+
+        protected override void AddBusinessRules()
+        {
+        }
+
+        #endregion
+
+        #region  Authorization Rules
+
+        protected void AddAuthorizationRules()
+        {
+        }
+
+        #endregion
+
+        #region  Factory Methods
+
+        private SortingLineTaskDetail()
+        {
+        }
+
+        internal static SortingLineTaskDetail GetSortingLineTaskDetail(SafeDataReader dr)
+        {
+            return DataPortal.FetchChild<SortingLineTaskDetail>(dr);
+        }
+
+        #endregion
+
+        #region  Data Access
+
+        private void Child_Fetch(SafeDataReader dr)
+        {
+            LoadProperty(IdProperty, dr.GetString("ID"));
+            LoadProperty(SORTINGTASKNOProperty, dr.GetString("TASKID"));
+            LoadProperty(SUBLINECODEProperty, dr.GetString("SUBLINECODE"));
+            LoadProperty(SUBLINENAMEProperty, dr.GetString("SUBLINENAME"));
+            LoadProperty(LINEBOXCODEProperty, dr.GetString("LINEBOXCODE"));
+            LoadProperty(LINEBOXNAMEProperty, dr.GetString("LINEBOXNAME"));
+            LoadProperty(ADDRESSCODEProperty, dr.GetString("ADDRESSCODE"));
+            LoadProperty(QTYProperty, dr.GetInt32("QTY"));
+            LoadProperty(CIGCODEProperty, dr.GetString("CIGCODE"));
+            LoadProperty(CIGNAMEProperty, dr.GetString("CIGNAME"));
+        }
+
+        #endregion
+    }
+}

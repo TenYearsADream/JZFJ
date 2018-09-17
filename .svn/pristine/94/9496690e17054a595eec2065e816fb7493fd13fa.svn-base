@@ -1,0 +1,276 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Csla;
+using MySql.Data.MySqlClient;
+
+namespace BusinessLogic
+{
+
+        [Serializable]
+    public class OperationLog:BusinessBase<OperationLog>
+    {
+        #region  Business Methods
+
+        private static PropertyInfo<string> IdProperty = RegisterProperty<string>(o => o.ID, "标识号");
+
+        public string ID
+        {
+            get { return GetProperty(IdProperty); }
+            set { LoadProperty(IdProperty, value); }
+        }
+
+        private static PropertyInfo<string> OPERATIONCODEProperty = RegisterProperty<string>(o => o.OPERATIONCODE, "动作代码");
+
+        public string OPERATIONCODE
+        {
+            get { return GetProperty(OPERATIONCODEProperty); }
+            set { SetProperty(OPERATIONCODEProperty, value); }
+        }
+
+        private static PropertyInfo<string> OPERATIONNAMEProperty = RegisterProperty<string>(o => o.OPERATIONNAME, "动作名称");
+
+        public string OPERATIONNAME
+        {
+            get { return GetProperty(OPERATIONNAMEProperty); }
+            set { SetProperty(OPERATIONNAMEProperty, value); }
+        }
+
+        private static PropertyInfo<string> OPERATIONLEVELProperty = RegisterProperty<string>(o => o.OPERATIONLEVEL, "动作级别");
+
+        public string OPERATIONLEVEL
+        {
+            get { return GetProperty(OPERATIONLEVELProperty); }
+            set { SetProperty(OPERATIONLEVELProperty, value); }
+        }
+
+        private static PropertyInfo<DateTime> STARTTIMEProperty = RegisterProperty<DateTime>(o => o.STARTTIME, "开始时间");
+
+        public DateTime STARTTIME
+        {
+            get { return GetProperty(STARTTIMEProperty); }
+            set { SetProperty(STARTTIMEProperty, value); }
+        }
+
+        private static PropertyInfo<DateTime> ENDTIMEProperty = RegisterProperty<DateTime>(o => o.ENDTIME, "结束时间");
+
+        public DateTime ENDTIME
+        {
+            get { return GetProperty(ENDTIMEProperty); }
+            set { SetProperty(ENDTIMEProperty, value); }
+        }
+
+       private static PropertyInfo<string> OPERATIONDATEProperty = RegisterProperty<string>(o => o.OPERATIONDATE, "记录日期");
+
+        public string OPERATIONDATE
+        {
+            get { return GetProperty(OPERATIONDATEProperty); }
+            set { SetProperty(OPERATIONDATEProperty, value); }
+        }
+
+        #endregion
+
+        #region  Business Rules
+
+        protected override void AddBusinessRules()
+        {
+            
+        }
+
+       
+
+        #endregion
+
+        #region  Authorization Rules
+
+        protected void AddAuthorizationRules()
+        {
+            // add AuthorizationRules here
+        }
+
+        protected static void AddObjectAuthorizationRules()
+        {
+            // add object-level authorization rules here
+        }
+
+        #endregion
+
+        #region  Factory Methods
+
+        public static OperationLog NewOperationLog()
+        {
+            return DataPortal.Create<OperationLog>();
+        }
+
+        public static OperationLog GetOperationLogById(string ID)
+        {
+            return DataPortal.Fetch<OperationLog>(new SingleCriteria<OperationLog, string>(ID));
+        }
+
+        //public static void DeleteOperationLog(string id)
+        //{
+        //    DataPortal.Delete(new SingleCriteria<OperationLog, string>(id));
+        //}
+
+        private OperationLog()
+        {
+            /* require use of factory methods */
+        }
+
+        #endregion
+
+        #region  Data Access
+
+        [RunLocal]
+        protected void DataPortal_Create(OperationLog OperationLog)
+        {
+            using (BypassPropertyChecks)
+            {
+                LoadProperty(IdProperty, OperationLog.ID);
+                LoadProperty(OPERATIONCODEProperty, OperationLog.OPERATIONCODE);
+                LoadProperty(OPERATIONNAMEProperty, OperationLog.OPERATIONNAME);
+                LoadProperty(OPERATIONLEVELProperty, OperationLog.OPERATIONLEVEL);
+                LoadProperty(STARTTIMEProperty, OperationLog.STARTTIME);
+                LoadProperty(ENDTIMEProperty, OperationLog.ENDTIME);
+                LoadProperty(OPERATIONDATEProperty, OperationLog.OPERATIONDATE);
+            }
+        }
+
+        [RunLocal]
+        protected override void DataPortal_Create()
+        {
+            using (BypassPropertyChecks)
+            {
+                LoadProperty(IdProperty, Guid.NewGuid().ToString());
+                LoadProperty(STARTTIMEProperty, DateTime.Now);
+                LoadProperty(OPERATIONDATEProperty, DateTime.Now.ToShortDateString());
+            }
+        }
+
+        private void DataPortal_Fetch(SingleCriteria<OperationLog, string> criteria)
+        {
+            using (BypassPropertyChecks)
+            {
+                using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+                {
+                    cn.Open();
+                    using (var cm = cn.CreateCommand())
+                    {
+                        cm.CommandText = "SELECT * FROM t_order WHERE [ID] = @id";
+                        cm.Parameters.AddWithValue("@id", criteria.Value);
+                        using (var dr = new Csla.Data.SafeDataReader(cm.ExecuteReader()))
+                        {
+                            dr.Read();
+                            ID = dr.GetString("ID");
+                            OPERATIONCODE = dr.GetString("OPERATIONCODE");
+                            OPERATIONNAME = dr.GetString("OPERATIONNAME");
+                            OPERATIONLEVEL = dr.GetString("OPERATIONLEVEL");
+                            STARTTIME = dr.GetDateTime("STARTTIME");
+                            ENDTIME = dr.GetDateTime("ENDTIME");
+                            OPERATIONDATE = dr.GetString("OPERATIONDATE");
+                        }
+                    }
+                }
+            }
+        }
+
+        
+
+        [Transactional(TransactionalTypes.Manual)]
+        protected override void DataPortal_Insert()
+        {
+            using (BypassPropertyChecks)
+            {
+                using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+                {
+                    cn.Open();
+                    using (var tran = cn.BeginTransaction())
+                    {
+                        try
+                        {
+                            using (var cm = cn.CreateCommand())
+                            {
+
+                                StringBuilder SQL = new StringBuilder();
+                                SQL.Append("INSERT ");
+                                SQL.Append("   INTO T_OPERATIONLOG ");
+                                SQL.Append("        ( ");
+                                SQL.Append(
+                                    "            ID,OPERATIONCODE,OPERATIONNAME,OPERATIONLEVEL,STARTTIME,ENDTIME,OPERATIONDATE ");
+                                SQL.Append("        ) ");
+                                SQL.Append("        VALUES ");
+                                SQL.Append("        ( ");
+                                SQL.Append("            @ID,@OPERATIONCODE,@OPERATIONNAME,@OPERATIONLEVEL,@STARTTIME,@ENDTIME,@OPERATIONDATE ");
+                                SQL.Append("        )");
+                                cm.CommandText = SQL.ToString();
+                                cm.Parameters.AddWithValue("@ID", ID);
+                                cm.Parameters.AddWithValue("@OPERATIONCODE", OPERATIONCODE);
+                                cm.Parameters.AddWithValue("@OPERATIONNAME", OPERATIONNAME);
+                                cm.Parameters.AddWithValue("@OPERATIONLEVEL", OPERATIONLEVEL);
+                                cm.Parameters.AddWithValue("@STARTTIME", STARTTIME);
+                                cm.Parameters.AddWithValue("@ENDTIME", ENDTIME);
+                                cm.Parameters.AddWithValue("@OPERATIONDATE", OPERATIONDATE);
+                                cm.ExecuteNonQuery();
+                            }
+                            tran.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            tran.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+        }
+
+        [Transactional(TransactionalTypes.Manual)]
+        protected override void DataPortal_Update()
+        {
+            using (BypassPropertyChecks)
+            {
+                using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+                {
+                    cn.Open();
+                    using (var tran = cn.BeginTransaction())
+                    {
+                        try
+                        {
+                            using (var cm = cn.CreateCommand())
+                            {
+                                StringBuilder SQL = new StringBuilder();
+                                SQL.Append("UPDATE T_OPERATIONLOG ");
+                                SQL.Append("    SET OPERATIONCODE = @OPERATIONCODE,OPERATIONNAME = @OPERATIONNAME,OPERATIONLEVEL = @OPERATIONLEVEL,STARTTIME = @STARTTIME,ENDTIME = @ENDTIME,OPERATIONDATE = @OPERATIONDATE ");
+                                SQL.Append("  WHERE ID = @ID");
+
+                                cm.CommandText = SQL.ToString();
+                                cm.Parameters.AddWithValue("@ID", ID);
+                                cm.Parameters.AddWithValue("@OPERATIONCODE", OPERATIONCODE);
+                                cm.Parameters.AddWithValue("@OPERATIONNAME", OPERATIONNAME);
+                                cm.Parameters.AddWithValue("@OPERATIONLEVEL", OPERATIONLEVEL);
+                                cm.Parameters.AddWithValue("@STARTTIME", STARTTIME);
+                                cm.Parameters.AddWithValue("@ENDTIME", ENDTIME);
+                                cm.Parameters.AddWithValue("@OPERATIONDATE", OPERATIONDATE);
+                                cm.ExecuteNonQuery();
+                            }
+                            
+                            tran.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            tran.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+        }
+
+        
+
+        #endregion
+
+        
+    }
+}

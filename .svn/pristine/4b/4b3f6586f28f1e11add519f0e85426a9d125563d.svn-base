@@ -1,0 +1,196 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using BusinessLogic.Common;
+using BusinessLogic.Search;
+
+namespace MonitorMain.CustomContorl
+{
+    public partial class C_SortingMain : UserControl
+    {
+        private Dictionary<string, C_Shelf> cShelves;
+        private Dictionary<string, FlowLayoutPanel> flowLayoutPanels; 
+        private SortingSubLineList sortingSubLineList;
+
+        public C_SortingMain()
+        {
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
+            SetStyle(ControlStyles.DoubleBuffer, true); //双缓冲
+            this.UpdateStyles();
+            InitializeComponent();
+            Dock = DockStyle.Fill;
+
+            sortingSubLineList = SortingSubLineList.GetSortingLineList();
+
+            flowLayoutPanel1.Tag = sortingSubLineList[0].sublineid;
+            flowLayoutPanel3.Tag = sortingSubLineList[1].sublineid;
+            flowLayoutPanel5.Tag = sortingSubLineList[2].sublineid;
+            flowLayoutPanel7.Tag = sortingSubLineList[3].sublineid;
+            flowLayoutPanel2.Tag = sortingSubLineList[4].sublineid;
+            flowLayoutPanel4.Tag = sortingSubLineList[5].sublineid;
+            flowLayoutPanel6.Tag = sortingSubLineList[6].sublineid;
+            flowLayoutPanel8.Tag = sortingSubLineList[7].sublineid;
+
+            flowLayoutPanels = new Dictionary<string, FlowLayoutPanel>();
+            flowLayoutPanels.Add(flowLayoutPanel1.Tag.ToString(),flowLayoutPanel1);
+            flowLayoutPanels.Add(flowLayoutPanel2.Tag.ToString(), flowLayoutPanel2);
+            flowLayoutPanels.Add(flowLayoutPanel3.Tag.ToString(), flowLayoutPanel3);
+            flowLayoutPanels.Add(flowLayoutPanel4.Tag.ToString(), flowLayoutPanel4);
+            flowLayoutPanels.Add(flowLayoutPanel5.Tag.ToString(), flowLayoutPanel5);
+            flowLayoutPanels.Add(flowLayoutPanel6.Tag.ToString(), flowLayoutPanel6);
+            flowLayoutPanels.Add(flowLayoutPanel7.Tag.ToString(), flowLayoutPanel7);
+            flowLayoutPanels.Add(flowLayoutPanel8.Tag.ToString(), flowLayoutPanel8);
+        }
+
+
+        private C_Shelf CreateShelf(SortingLineBox sortingLineBox)
+        {
+            C_Shelf c_Shelf = new C_Shelf(sortingLineBox);
+            c_Shelf.SetTooltip();
+            c_Shelf.Name = sortingLineBox.LineBoxCode;
+            return c_Shelf;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
+
+        private void C_SortingMain_Load(object sender, EventArgs e)
+        {
+            ReLoad();
+            
+        }
+
+        public void ReLoad()
+        {
+            SortingLineBoxList sortingLineBoxList = SortingLineBoxList.GetLineNonBoxList();
+            SortingLineBoxList dynamicsortingLineBoxList = SortingLineBoxList.GetDynamicLineBoxList();
+
+            cShelves = new Dictionary<string, C_Shelf>();
+            foreach (KeyValuePair<string, FlowLayoutPanel> flowLayoutPanel in flowLayoutPanels)
+            {
+                flowLayoutPanel.Value.Controls.Clear();
+            }
+
+            if (dynamicsortingLineBoxList.Count > 0)
+            {
+                foreach (SortingLineBox sortingLineBox in dynamicsortingLineBoxList)
+                {
+                    foreach (KeyValuePair<string, FlowLayoutPanel> flowLayoutPanel in flowLayoutPanels)
+                    {
+                        if (sortingLineBox.sublineId == flowLayoutPanel.Value.Tag.ToString())
+                        {
+                            C_Shelf cShelf = CreateShelf(sortingLineBox);
+                            cShelf.Margin = new Padding(0,0,20,0);
+                            cShelves.Add(cShelf.Name, cShelf);
+                            flowLayoutPanel.Value.Controls.Add(cShelf);
+                        }
+                    }
+                }
+            }
+
+            if (sortingLineBoxList.Count > 0)
+            {
+                foreach (SortingLineBox sortingLineBox in sortingLineBoxList)
+                {
+                    foreach (KeyValuePair<string, FlowLayoutPanel> flowLayoutPanel in flowLayoutPanels)
+                    {
+                        if (sortingLineBox.sublineId == flowLayoutPanel.Value.Tag.ToString())
+                        {
+                            C_Shelf cShelf = CreateShelf(sortingLineBox);
+                            cShelves.Add(cShelf.Name, cShelf);
+                            cShelf.Margin = new Padding(0, 0, 20, 0);
+                            flowLayoutPanel.Value.Controls.Add(cShelf);
+                        }
+                    }
+                }
+            }
+
+            if (chkshowqty.Checked)
+            {
+                chkshowqty_CheckedChanged(null, null);
+            }
+            else
+            {
+                chkshowqty.Checked = true;
+            }
+        }
+
+        private void chkshowqty_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkshowqty.Checked)
+            {
+	            UpdateQty();
+            }
+            else
+            {
+                ResetQty();
+            }
+        }
+
+	    private void ResetQty()
+	    {
+		    foreach (KeyValuePair<string, C_Shelf> cShelf in cShelves)
+		    {
+			    cShelf.Value.ShowCigQty(0);
+		    }
+	    }
+
+	    private void UpdateQty()
+	    {
+            
+            SortingLineBoxList sortingLineBoxList = SortingLineBoxList.GetLineBoxList();
+            SortingLineBoxList dynamicsortingLineBoxList = SortingLineBoxList.GetDynamicLineBoxList();
+
+	        foreach (SortingLineBox sortingLineBox in dynamicsortingLineBoxList)
+	        {
+	            try
+	            {
+                    cShelves[sortingLineBox.LineBoxCode].ShowCigQty(sortingLineBox.NONQTY);
+	            }
+	            catch (Exception)
+	            {
+	                
+	                
+	            }
+                
+	        }
+
+
+            foreach (SortingLineBox sortingLineBox in sortingLineBoxList)
+            {
+                try
+                {
+                    cShelves[sortingLineBox.LineBoxCode].ShowCigQty(sortingLineBox.NONQTY);
+                }
+                catch (Exception)
+                {
+                    
+                    
+                }
+                
+            }
+        }
+
+	    private void chkshowname_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            foreach (KeyValuePair<string, C_Shelf> cShelf in cShelves)
+            {
+                ((C_Shelf)cShelf.Value).ShowCigName(chkshowname.Checked);
+            }
+        }
+    }
+}

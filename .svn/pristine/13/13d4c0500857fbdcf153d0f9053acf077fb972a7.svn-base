@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using LY.FuelStationPOS.Protocol;
+using MonitorMain;
+
+namespace HDWLogic
+{
+    public class TagSdk
+    {
+        public static TagSdk instance = new TagSdk();
+        private SerialPortDao serialPortDao;
+
+        public TagSdk()
+        {
+            serialPortDao = SerialPortDao.GetSerialPortDao();
+            serialPortDao.Received += new PortDataReceivedEventHandle(serialPortDao_Received);
+            try
+            {
+                //serialPortDao.Open();
+            }
+            catch (Exception)
+            {
+                
+                throw new Exception("串口打开失败");
+            }
+            
+        }
+
+        /// <summary>
+        /// 需要给人操作所显示的烟仓及数量列表
+        /// 两个进程间依靠此列表进行按钮的获取
+        /// </summary>
+        public Dictionary<int,int> CigNums { get; set; }
+
+        void serialPortDao_Received(object sender, PortDataReciveEventArgs e)
+        {
+            if (CigNums != null && CigNums.ContainsKey(Convert.ToInt32(e.Data[0])))
+            {
+                CigNums[Convert.ToInt32(e.Data[0])] = 0;
+                Dictionary<int,int> sendcontext = new Dictionary<int, int>();
+                sendcontext.Add(Convert.ToInt32(e.Data[0]),0);
+                NixielightSDK.SendByMODBUS(sendcontext);
+            }
+        }
+
+
+        /// <summary>
+        /// 获取按钮的状态是否为已按下
+        /// </summary>
+        /// <returns>true已全部按下 false还没按完</returns>
+        public bool GetPlcPressTagReady()
+        {
+            if (CigNums == null)
+            {
+                return false;
+            }
+
+            //获取显示列表中是否有数量不为0（表示按钮未按）
+            foreach (KeyValuePair<int, int> keyValuePair in CigNums)
+            {
+                if (keyValuePair.Value != 0)
+                {
+                    //还有按钮未按
+                    return false;
+                }
+            }
+            //全部按完
+            return true;
+        }
+    }
+}

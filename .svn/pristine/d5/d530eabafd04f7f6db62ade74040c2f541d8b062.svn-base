@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="对应下载类中几个事件中的参数类">
+    <Position X="2.646" Y="0.5" Height="0.469" Width="6.252" />
+  </Comment>
+  <Class Name="BusinessLogic.Download.DownloadData">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAQCIAAAAEAASIAAAAAAAAAAAAAQAAAACAAAA=</HashCode>
+      <FileName>Download\DownloadData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusinessLogic.Download.DownloadPrecess">
+    <Position X="4.75" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Download\DownloadData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusinessLogic.Download.DownloadArgs">
+    <Position X="2.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SQAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Download\DownloadData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusinessLogic.Download.DownloadErrorArgs">
+    <Position X="6.75" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Download\DownloadData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

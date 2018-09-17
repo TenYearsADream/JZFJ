@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using AppUtility;
+using HDWLogic;
+
+namespace BusinessLogic.SortingTask
+{
+
+    public class SortingLineTaskQueue
+    {
+        private static SortingLineTaskQueue _sortingLineTaskQueue;
+
+        public static SortingLineTaskQueue GetInstance()
+        {
+            if (_sortingLineTaskQueue == null)
+            {
+                _sortingLineTaskQueue = new SortingLineTaskQueue();
+            }
+            return _sortingLineTaskQueue;
+        }
+
+        public SortingLineTaskQueue()
+        {
+            SortingLineTasks = new Queue<SortingLineTask>();
+            QueueMaxCount = 30;
+        }
+
+        public int QueueMaxCount { get; set; }
+
+        public Queue<SortingLineTask> SortingLineTasks { get; set; }
+
+        public List<Cube> Cubes { get; set; }
+
+        public Queue<SortingLineTask> LoadSortingLineTasks()
+        {
+            SortingLineTasks.Clear();
+            SortingLineTaskList sortingLineTaskList = SortingLineTaskList.GetFinSortingLineTaskList(new QueryCondition("1", true, AppUtil._SortingLineId));
+            foreach (SortingLineTask sortingLineTask in sortingLineTaskList)
+            {
+                this.Enqueue(sortingLineTask);
+                //SortingLineTasks.Enqueue(sortingLineTask);
+            }
+            
+            return SortingLineTasks;
+        }
+
+        /// <summary>
+        /// 将任务对象加入到分拣队列
+        /// </summary>
+        /// <param name="sortingLineTask"></param>
+        public void Enqueue(SortingLineTask sortingLineTask)
+        {
+            while (SortingLineTasks.Count >= 30)
+            {
+                SortingLineTasks.Dequeue();
+            }
+            SortingLineTasks.Enqueue(sortingLineTask);
+
+            //生成界面上需要显示的小车列表
+            GetCubes();
+        }
+
+        private void GetCubes()
+        {
+            Cubes = new List<Cube>();
+            SortingLineTask[] sortingLineTaskses = SortingLineTasks.ToArray();
+            for (int i = 0; i < SortingLineTasks.Count; i++)
+            {
+                Cube cube = new Cube();
+                cube.Customername = sortingLineTaskses[i].ShortName;
+                cube.Indexno = sortingLineTaskses[i].INDEXNO;
+                cube.FinSortingLineTaskDetails = sortingLineTaskses[i].SortingLineTaskDetails.GetLessAreaDetails(i + 1);
+                cube.TotCignum = sortingLineTaskses[i].SumOrderNumber();
+                foreach (SortingLineTaskDetail finSortingLineTaskDetail in cube.FinSortingLineTaskDetails)
+                {
+                    cube.FinCignum += finSortingLineTaskDetail.QTY;
+                }
+                Cubes.Add(cube);
+            }
+        }
+    }
+}

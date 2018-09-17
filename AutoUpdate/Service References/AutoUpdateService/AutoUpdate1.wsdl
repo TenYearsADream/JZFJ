@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetAllUpdateFileInfo">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllUpdateFileInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllUpdateFileInfoResult" type="tns:ArrayOfUpdateFileInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUpdateFileInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UpdateFileInfo" nillable="true" type="tns:UpdateFileInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UpdateFileInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAllUpdateFileInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllUpdateFileInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUpdateFileInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllUpdateFileInfoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AutoUpdateSoap">
+    <wsdl:operation name="GetAllUpdateFileInfo">
+      <wsdl:input message="tns:GetAllUpdateFileInfoSoapIn" />
+      <wsdl:output message="tns:GetAllUpdateFileInfoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AutoUpdateSoap" type="tns:AutoUpdateSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllUpdateFileInfo">
+      <soap:operation soapAction="http://tempuri.org/GetAllUpdateFileInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AutoUpdateSoap12" type="tns:AutoUpdateSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllUpdateFileInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetAllUpdateFileInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AutoUpdate">
+    <wsdl:port name="AutoUpdateSoap" binding="tns:AutoUpdateSoap">
+      <soap:address location="http://10.69.36.101/AutoUpdate.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AutoUpdateSoap12" binding="tns:AutoUpdateSoap12">
+      <soap12:address location="http://10.69.36.101/AutoUpdate.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

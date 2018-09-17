@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Csla;
+using Csla.Data;
+
+namespace BusinessLogic.Log
+{
+    [Serializable]
+    public class MonitorLogInfo : ReadOnlyBase<MonitorLogInfo>
+    {
+        private static PropertyInfo<string> IdProperty = RegisterProperty<string>(o => o.ID, "标识号");
+
+        public string ID
+        {
+            get { return GetProperty(IdProperty); }
+            private set { LoadProperty(IdProperty, value); }
+        }
+
+        private static PropertyInfo<string> LOGNOProperty = RegisterProperty<string>(o => o.LOGNO, "日志-故障代码");
+
+        public string LOGNO
+        {
+            get { return GetProperty(LOGNOProperty); }
+            
+        }
+
+        private static PropertyInfo<string> LOGNAMEProperty = RegisterProperty<string>(o => o.LOGNAME, "日志-故障名称");
+
+        public string LOGNAME
+        {
+            get { return GetProperty(LOGNAMEProperty); }
+            
+        }
+
+        private static PropertyInfo<string> LOGLOCATIONProperty = RegisterProperty<string>(o => o.LOGLOCATION, "产生位置");
+
+        public string LOGLOCATION
+        {
+            get { return GetProperty(LOGLOCATIONProperty); }
+            
+        }
+
+        private static PropertyInfo<string> LOGINFOProperty = RegisterProperty<string>(o => o.LOGINFO, "日志-故障描述");
+
+        public string LOGINFO
+        {
+            get { return GetProperty(LOGINFOProperty); }
+            
+        }
+
+        private static PropertyInfo<DateTime> CREATETIMEProperty = RegisterProperty<DateTime>(o => o.CREATETIME, "开始时间");
+
+        public DateTime CREATETIME
+        {
+            get { return GetProperty(CREATETIMEProperty); }
+            
+        }
+
+        private static PropertyInfo<string> PROCESSMODEProperty = RegisterProperty<string>(o => o.PROCESSMODE, "处理办法");
+
+        public string PROCESSMODE
+        {
+            get { return GetProperty(PROCESSMODEProperty); }
+            
+        }
+
+        private static PropertyInfo<int> LOGTYPEProperty = RegisterProperty<int>(o => o.LOGTYPE, "日志类型");
+
+        public int LOGTYPE
+        {
+            get { return GetProperty(LOGTYPEProperty); }
+            
+        }
+
+        private static PropertyInfo<string> SortingLineCodeProperty = RegisterProperty<string>(o => o.SortingLineCode, "日志类型");
+
+        public string SortingLineCode
+        {
+            get { return GetProperty(SortingLineCodeProperty); }
+        }
+
+        public string TypeName
+        {
+            get
+            {
+                if (LOGTYPE == 0)
+                {
+                    return "Info";
+                }
+                if (LOGTYPE == 1)
+                {
+                    return "Alert";
+                }
+                if (LOGTYPE == 2)
+                {
+                    return "Error";
+                }
+                return "";
+            }
+
+        }
+
+        private static PropertyInfo<string> CREATEDATEProperty = RegisterProperty<string>(o => o.CREATEDATE, "记录日期");
+
+        public string CREATEDATE
+        {
+            get { return GetProperty(CREATEDATEProperty); }
+        }
+
+        internal MonitorLogInfo(SafeDataReader dr)
+        {
+            LoadProperty(IdProperty, dr.GetString("ID"));
+            LoadProperty(LOGNOProperty, dr.GetString("logno"));
+            LoadProperty(LOGNAMEProperty, dr.GetString("logname"));
+            LoadProperty(LOGINFOProperty, dr.GetString("loginfo"));
+            LoadProperty(LOGLOCATIONProperty, dr.GetString("loglocation"));
+            LoadProperty(CREATETIMEProperty, dr.GetDateTime("createtime"));
+            LoadProperty(PROCESSMODEProperty, dr.GetString("processmode"));
+            LoadProperty(LOGTYPEProperty, dr.GetInt32("logtype"));
+            LoadProperty(SortingLineCodeProperty,dr.GetString("sortinglinecode"));
+            LoadProperty(CREATEDATEProperty, dr.GetString("date"));
+        }
+    }
+}

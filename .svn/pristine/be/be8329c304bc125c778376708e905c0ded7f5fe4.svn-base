@@ -1,0 +1,205 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using BusinessLogic.Common;
+using BusinessLogic.Search;
+using BusinessLogic.SortingTask;
+using HDWLogic;
+
+namespace MonitorMain.CustomContorl
+{
+    public partial class C_SortingMain : UserControl
+    {
+        private Dictionary<string, C_Shelf> cShelves;
+        private Dictionary<string, FlowLayoutPanel> flowLayoutPanels; 
+        private SortingSubLineList sortingSubLineList;
+
+        public C_SortingMain()
+        {
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
+            SetStyle(ControlStyles.DoubleBuffer, true); //双缓冲
+            this.UpdateStyles();
+            InitializeComponent();
+            Dock = DockStyle.Fill;
+        }
+
+
+        private C_Shelf CreateShelf(SortingLineBox sortingLineBox)
+        {
+            C_Shelf c_Shelf = new C_Shelf(sortingLineBox);
+            c_Shelf.SetTooltip();
+            c_Shelf.Name = sortingLineBox.LineBoxCode;
+            return c_Shelf;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
+
+        private void C_SortingMain_Load(object sender, EventArgs e)
+        {
+            ReLoad();
+            LoadCube();
+            TagSdk tagSdk = TagSdk.instance;
+            
+        }
+
+        private void LoadCube()
+        {
+
+            sortingSubLineList = SortingSubLineList.GetSubSortingLineList();
+            this.tableLayoutPanel1.ColumnCount = sortingSubLineList.Count;
+            foreach (SortingSubLine sortingSubLine in sortingSubLineList)
+            {
+                tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent,100F));
+            }
+
+            SortingLineTaskQueue.GetInstance().LoadSortingLineTasks();
+            for (int j = 0; j < sortingSubLineList.Count; j++)
+            {
+                CCube cCube = new CCube();
+                cCube.Dock = DockStyle.Fill;
+                cCube.Name = "ccube" + j;
+                cCube.Margin = new Padding(0, 0, 0, 0);
+                cCube.labcustname.Text = "无任务";
+                cCube.labfinnum.Text = "0";
+                cCube.labindexno.Text = "0";
+                cCube.panelno.Text = (j+1).ToString();
+                cCube.Tag = sortingSubLineList[j].sublineCode;
+                try
+                {
+                    cCube.labcustname.Text = SortingLineTaskQueue.GetInstance().Cubes[j].Customername;
+                    cCube.labfinnum.Text = SortingLineTaskQueue.GetInstance().Cubes[j].FinCignum.ToString();
+                    cCube.labindexno.Text = SortingLineTaskQueue.GetInstance().Cubes[j].Indexno.ToString();
+
+                }
+                catch (Exception)
+                {
+
+
+                }
+                tableLayoutPanel1.Controls.Add(cCube, j, 0);
+            }
+
+        }
+
+        public void ReLoad()
+        {
+            SortingLineBoxList sortingLineBoxList = SortingLineBoxList.GetLineBoxList();
+            
+
+            cShelves = new Dictionary<string, C_Shelf>();
+            
+            flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel2.Controls.Clear();
+            if (sortingLineBoxList.Count > 0)
+            {
+                foreach (SortingLineBox sortingLineBox in sortingLineBoxList)
+                {
+                    if (Convert.ToInt32(sortingLineBox.LineBoxCode) <= 60)
+                    {
+                        C_Shelf cShelf = CreateShelf(sortingLineBox);
+                        cShelves.Add(cShelf.Name, cShelf);
+                        cShelf.Margin = new Padding(0, 0, 1, 0);
+                        cShelf.PickNum = "111";
+                        flowLayoutPanel1.Controls.Add(cShelf);
+                    }
+                    else
+                    {
+                        C_Shelf cShelf = CreateShelf(sortingLineBox);
+                        cShelves.Add(cShelf.Name, cShelf);
+                        cShelf.Margin = new Padding(0, 0, 1, 0);
+                        flowLayoutPanel2.Controls.Add(cShelf);
+                    }
+                    
+                }
+            }
+
+            if (chkshowqty.Checked)
+            {
+                chkshowqty_CheckedChanged(null, null);
+            }
+            else
+            {
+                chkshowqty.Checked = true;
+            }
+        }
+
+        private void chkshowqty_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkshowqty.Checked)
+            {
+	            UpdateQty();
+            }
+            else
+            {
+                ResetQty();
+            }
+        }
+
+	    private void ResetQty()
+	    {
+		    foreach (KeyValuePair<string, C_Shelf> cShelf in cShelves)
+		    {
+			    cShelf.Value.ShowCigQty(0);
+		    }
+	    }
+
+	    private void UpdateQty()
+	    {
+            
+            SortingLineBoxList sortingLineBoxList = SortingLineBoxList.GetLineNonBoxList();
+            SortingLineBoxList dynamicsortingLineBoxList = SortingLineBoxList.GetDynamicLineBoxList();
+
+	        foreach (SortingLineBox sortingLineBox in dynamicsortingLineBoxList)
+	        {
+	            try
+	            {
+                    cShelves[sortingLineBox.LineBoxCode].ShowCigQty(sortingLineBox.NONQTY);
+	            }
+	            catch (Exception)
+	            {
+	                
+	                
+	            }
+                
+	        }
+
+
+            foreach (SortingLineBox sortingLineBox in sortingLineBoxList)
+            {
+                try
+                {
+                    cShelves[sortingLineBox.LineBoxCode].ShowCigQty(sortingLineBox.NONQTY);
+                }
+                catch (Exception)
+                {
+                    
+                    
+                }
+                
+            }
+        }
+
+	    private void chkshowname_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            foreach (KeyValuePair<string, C_Shelf> cShelf in cShelves)
+            {
+                ((C_Shelf)cShelf.Value).ShowCigName(chkshowname.Checked);
+            }
+        }
+    }
+}

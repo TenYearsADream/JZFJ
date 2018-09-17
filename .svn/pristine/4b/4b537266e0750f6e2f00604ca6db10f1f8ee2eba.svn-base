@@ -1,0 +1,126 @@
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.Windows.Forms;
+using AppUtility;
+using BusinessLogic.Configuration;
+using DevComponents.DotNetBar;
+
+namespace MonitorMain
+{
+    static class Program
+    {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            MessageBoxEx.UseSystemLocalizedString = true;
+            MessageBoxEx.EnableGlass = false;
+
+            bool createNew;
+
+            using (System.Threading.Mutex mutex = new System.Threading.Mutex(true, Application.ProductName, out createNew))
+            {
+
+                if (ConfigurationSettings.AppSettings["Mode"].ToLower() == "分拣")
+                {
+
+                    Process[] processes = System.Diagnostics.Process.GetProcessesByName(Application.ProductName);
+                    string currname = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+                    
+                    foreach (Process process in processes)
+                    {
+                        string name = process.MainModule.FileName;
+                        
+                        if (currname == name && process.Id != System.Diagnostics.Process.GetCurrentProcess().Id)
+                        {
+                            MessageBox.Show("程序已经在运行中...");
+                            System.Threading.Thread.Sleep(1000);
+                            System.Environment.Exit(1);
+                        }
+                    }
+                    try
+                    {
+                        AppUtility.AppUtil.SysMode = "s";
+                        Application.Run(FJMainForm.Instance);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Unable to connect to any of the specified MySQL hosts"))
+                        {
+                            MessageBoxEx.Show("无法连接到分机拣数据库");
+                        }
+                        else
+                            throw;
+                    }
+                }
+
+
+                if (ConfigurationSettings.AppSettings["Mode"].ToLower() == "补货")
+                {
+                    AppUtility.AppUtil.SysMode = "i";
+                    Application.Run(BHMainForm.Instance);
+                }
+                if (ConfigurationSettings.AppSettings["Mode"].ToUpper() == "出口屏1")
+                {
+                    Process[] processes = System.Diagnostics.Process.GetProcessesByName(Application.ProductName);
+                    string currname = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+                    foreach (Process process in processes)
+                    {
+                        string name = process.MainModule.FileName;
+                        if (currname == name && process.Id != System.Diagnostics.Process.GetCurrentProcess().Id)
+                        {
+                            MessageBox.Show("程序已经在运行中...");
+                            System.Threading.Thread.Sleep(1000);
+                            System.Environment.Exit(1);
+                        }
+                    }
+                    Application.Run(new OutPortForm("1"));
+                }
+                if (ConfigurationSettings.AppSettings["Mode"].ToUpper() == "合单屏")
+                {
+                    Process[] processes = System.Diagnostics.Process.GetProcessesByName(Application.ProductName);
+                    string currname = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+                    foreach (Process process in processes)
+                    {
+                        string name = process.MainModule.FileName;
+                        if (currname == name && process.Id != System.Diagnostics.Process.GetCurrentProcess().Id)
+                        {
+                            //MessageBox.Show("程序已经在运行中...");
+                            System.Threading.Thread.Sleep(1000);
+                            System.Environment.Exit(1);
+                        }
+                    }
+                    Application.Run(new PutPortForm("1"));
+                }
+                if (ConfigurationSettings.AppSettings["Mode"].ToUpper() == "补货屏")
+                {
+                    Application.Run(new InPortForm());
+                }
+                if (ConfigurationSettings.AppSettings["Mode"].ToUpper() == "品牌屏")
+                {
+                    Application.Run(new DisplayCigName());
+                }
+                if (ConfigurationSettings.AppSettings["Mode"].ToUpper() == "作业看板")
+                {
+                    Application.Run(new EfficeForm());
+                }
+                if (ConfigurationSettings.AppSettings["Mode"].ToUpper() == "烟仓")
+                {
+                    Application.Run(new DisLineBox());
+                }
+                if (ConfigurationSettings.AppSettings["Mode"].ToUpper() == "混合仓")
+                {
+                    Application.Run(new DynamicBoxForm());
+                }
+            }
+
+
+        }
+    }
+}

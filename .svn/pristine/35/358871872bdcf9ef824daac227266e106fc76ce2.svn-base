@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="出口转移类">
+    <Position X="0.5" Y="0.5" Height="0.375" Width="1.096" />
+  </Comment>
+  <Comment CommentText="分拣线类">
+    <Position X="2.573" Y="0.5" Height="0.375" Width="1.096" />
+  </Comment>
+  <Comment CommentText="分拣烟道列表">
+    <Position X="4.531" Y="0.5" Height="0.375" Width="1.096" />
+  </Comment>
+  <Comment CommentText="分拣烟道">
+    <Position X="6.74" Y="0.5" Height="0.375" Width="1.096" />
+  </Comment>
+  <Class Name="BusinessLogic.Common.OutPortTransfer">
+    <Position X="0.5" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\OutPortTransfer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusinessLogic.Common.SortingLine">
+    <Position X="2.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\SortingLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusinessLogic.Common.SortingLineBox">
+    <Position X="6.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAABAAgAAQAAAAAAAAAAAAAAAAAAAAAAAAQAAEAA=</HashCode>
+      <FileName>Common\SortingLineBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusinessLogic.Common.SortingLineBoxList">
+    <Position X="4.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAEAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Common\SortingLineBoxList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

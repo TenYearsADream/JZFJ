@@ -1,0 +1,131 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using BusinessLogic.SortingTask;
+
+namespace MonitorMain.CustomContorl
+{
+    /// <summary>
+    /// 界面上的小车控件
+    /// </summary>
+    public partial class C_Cube : UserControl
+    {
+        public C_Cube()
+        {
+            InitializeComponent();
+        }
+
+
+        /// <summary>
+        /// 设置小车的鼠标提示
+        /// </summary>
+        /// <param name="sublinecode"></param>
+        /// <param name="sortingLineTaskDetails"></param>
+        public void SetTooltip(string sublinecode,IEnumerable<SortingLineTaskDetail> sortingLineTaskDetails)
+        {
+            
+            if (sortingLineTaskDetails != null)
+            {
+                bool iscustnamered = false;
+                string toolstring = "";
+                sortingLineTaskDetails = sortingLineTaskDetails.OrderByDescending(item => item.SUBLINECODE == sublinecode).ThenBy(x => Convert.ToInt32(x.LINEBOXCODE));
+                foreach (SortingLineTaskDetail sortingLineTaskDetail in sortingLineTaskDetails)
+                {
+                    //如果明细任务中子线与小车位置对应以红色显示
+                    if (sublinecode == sortingLineTaskDetail.SUBLINECODE)
+                    {
+                        iscustnamered = true;
+                        toolstring += "<font color='red'>子线号:" + sortingLineTaskDetail.SUBLINECODE + " 仓道:" + sortingLineTaskDetail.LINEBOXCODE +
+                                  " 卷烟:" + sortingLineTaskDetail.CIGNAME + " 数量：" + sortingLineTaskDetail.QTY + "</font> <br></br>";
+                    }
+                    //else if (cubenum > Convert.ToInt32(sortingLineTaskDetail.SUBLINECODE.Replace("100", "")))
+                    //{
+                    //    toolstring += "<font color='silver'>子线号:" + sortingLineTaskDetail.SUBLINECODE + " 仓道:" + sortingLineTaskDetail.LINEBOXCODE +
+                    //              " 卷烟:" + sortingLineTaskDetail.CIGNAME + " 数量：" + sortingLineTaskDetail.QTY + "</font> <br></br>";
+                    //}
+                    else
+                    {
+                        toolstring += "子线号:" + sortingLineTaskDetail.SUBLINECODE + " 仓道:" + sortingLineTaskDetail.LINEBOXCODE +
+                                  " 卷烟:" + sortingLineTaskDetail.CIGNAME + " 数量：" + sortingLineTaskDetail.QTY + "<br></br>";
+                    }
+                }
+                this.superTooltip1.SetSuperTooltip(this.panelno,
+                    new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                        toolstring, null, null,
+                        DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(330, 200)));
+                this.superTooltip1.SetSuperTooltip(this.labindexno,
+                    new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                        toolstring, null, null,
+                        DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(330, 200)));
+                this.superTooltip1.SetSuperTooltip(this.labcustname,
+                    new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                        toolstring, null, null,
+                        DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(330, 200)));
+                this.superTooltip1.SetSuperTooltip(this.labfinnum,
+                    new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                        toolstring, null, null,
+                        DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(330, 200)));
+                if (iscustnamered)
+                {
+                    this.labcustname.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.labcustname.ForeColor = Color.Black;
+                }
+            }
+            else
+            {
+                this.superTooltip1.SetSuperTooltip(this.panelno,
+               new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                   "", null, null,
+                   DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(0, 0)));
+                this.superTooltip1.SetSuperTooltip(this.labindexno,
+                    new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                        "", null, null,
+                        DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(0, 0)));
+                this.superTooltip1.SetSuperTooltip(this.labcustname,
+                    new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                        "", null, null,
+                        DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(0, 0)));
+                this.superTooltip1.SetSuperTooltip(this.labfinnum,
+                    new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                        "", null, null,
+                        DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(0, 0)));
+                this.labcustname.ForeColor = Color.Black;
+            }
+            
+        }
+
+        public void SetTooltip()
+        {
+            this.superTooltip1.SetSuperTooltip(this.panelno,
+                new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                    "", null, null,
+                    DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(0, 0)));
+            this.superTooltip1.SetSuperTooltip(this.labindexno,
+                new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                    "", null, null,
+                    DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(0, 0)));
+            this.superTooltip1.SetSuperTooltip(this.labcustname,
+                new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                    "", null, null,
+                    DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(0, 0)));
+            this.superTooltip1.SetSuperTooltip(this.labfinnum,
+                new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+                    "", null, null,
+                    DevComponents.DotNetBar.eTooltipColor.System, false, false, new Size(0, 0)));
+            this.labcustname.ForeColor = Color.Black;
+        }
+
+        private void 编辑小车位置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+    }
+}

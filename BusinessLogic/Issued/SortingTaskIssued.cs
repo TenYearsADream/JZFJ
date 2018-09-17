@@ -1,0 +1,294 @@
+﻿// ########file = SortingTaskIssued.cs#############
+// ########author = "祝旻" ##############
+// ########created = 20140728#############
+
+using System;
+using System.Text;
+using AppUtility;
+using BusinessLogic;
+using BusinessLogic.SortingTask;
+using Csla;
+using Csla.Data;
+using MySql.Data.MySqlClient;
+
+namespace HDWLogic.Issued
+{
+    [Serializable]
+    public class SortingTaskIssued : BusinessBase<SortingTaskIssued>
+    {
+        #region  Business Methods
+
+        private SortingLineTask m_sortingLineTask;
+
+        private static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.ID, "标识号");
+
+        private static readonly PropertyInfo<int> PLCFLAGProperty = RegisterProperty<int>(p => p.PLCFLAG,
+                                                                                                "PLC的写入标志位，0可写入，1任务写入完成");
+
+        private static readonly PropertyInfo<string> PLCTASKNOProperty = RegisterProperty<string>(p => p.PLCTASKNO,
+                                                                                                  "任务号不能为0");
+
+        private static readonly PropertyInfo<string> SLOCATIONProperty = RegisterProperty<string>(
+            p => p.SLOCATION, "目的地址，对应出口数字编号1-20");
+
+        private static readonly PropertyInfo<int> ORDERNUMBERProperty = RegisterProperty<int>(
+            p => p.ORDERNUMBER, "订单中卷烟数量");
+
+
+        private static readonly PropertyInfo<SortingTaskIssuedDetails> SortingTaskIssuedDetailsProperty =
+            RegisterProperty<SortingTaskIssuedDetails>(p => p.SortingTaskIssuedDetails, "订单明细列表");
+
+        
+
+        public string ID
+        {
+            get { return GetProperty(IdProperty); }
+            set { SetProperty(IdProperty, value); }
+        }
+
+        public int PLCFLAG
+        {
+            get { return GetProperty(PLCFLAGProperty); }
+            set { SetProperty(PLCFLAGProperty, value); }
+        }
+
+        public string PLCTASKNO
+        {
+            get { return GetProperty(PLCTASKNOProperty); }
+            set { SetProperty(PLCTASKNOProperty, value); }
+        }
+
+        public string SLOCATION
+        {
+            get { return GetProperty(SLOCATIONProperty); }
+            set { SetProperty(SLOCATIONProperty, value); }
+        }
+
+        public int ORDERNUMBER
+        {
+            get { return GetProperty(ORDERNUMBERProperty); }
+            set { SetProperty(ORDERNUMBERProperty, value); }
+        }
+
+
+        public SortingTaskIssuedDetails SortingTaskIssuedDetails
+        {
+            get { return GetProperty(SortingTaskIssuedDetailsProperty); }
+            set { SetProperty(SortingTaskIssuedDetailsProperty, value); }
+        }
+
+        public void Reset()
+        {
+            PLCFLAG = 0;
+            PLCTASKNO = "0";
+            SLOCATION = "0";
+            ORDERNUMBER = 0;
+        }
+
+
+        #endregion
+
+        #region  Factory Methods
+
+        private SortingTaskIssued()
+        {
+            /* require use of factory methods */
+        }
+
+        public static SortingTaskIssued NewSortingTaskIssued()
+        {
+            return DataPortal.Create<SortingTaskIssued>();
+        }
+
+        public static SortingTaskIssued GetSortingTaskIssued(string ID)
+        {
+            return DataPortal.Fetch<SortingTaskIssued>(ID);
+        }
+
+
+        public static SortingTaskIssued GetSortingTaskIssued(SafeDataReader dr)
+        {
+            return DataPortal.Fetch<SortingTaskIssued>(dr);
+        }
+
+
+        
+
+        
+
+        #endregion
+
+        #region  Data Access
+
+        [RunLocal]
+        protected override void DataPortal_Create()
+        {
+            m_sortingLineTask = SortingLineTask.GetSortingLineTask();
+            using (BypassPropertyChecks)
+            {
+                LoadProperty(IdProperty, m_sortingLineTask.INDEXNO);
+                LoadProperty(PLCFLAGProperty, 1);
+                LoadProperty(PLCTASKNOProperty, SortingTaskIssuedList.GetSortingTaskIssuedList().LoadLastPLCTaskID());
+                LoadProperty(SLOCATIONProperty, "DB0");
+                LoadProperty(ORDERNUMBERProperty, m_sortingLineTask.SumOrderNumber());
+
+                // create child objects
+                LoadProperty(SortingTaskIssuedDetailsProperty,
+                             SortingTaskIssuedDetails.NewSortingTaskIssuedDetails(m_sortingLineTask.SortingLineTaskDetails));
+
+            }
+        }
+
+
+        private void DataPortal_Fetch(SafeDataReader dr)
+        {
+            LoadProperty(IdProperty, dr.GetString("ID"));
+            LoadProperty(PLCFLAGProperty, dr.GetString("PLCFLAG"));
+            LoadProperty(PLCTASKNOProperty, dr.GetString("PLCTASKNO"));
+            LoadProperty(SLOCATIONProperty, dr.GetString("SLOCATION"));
+            LoadProperty(ORDERNUMBERProperty, dr.GetInt32("ORDERNUMBER"));
+        }
+
+        /// <summary>
+        /// 通过PLC中到达信号的地址号获取其中的任务信息
+        /// </summary>
+        /// <param name="slocationcode"></param>
+        private void DataPortal_Fetch(string slocationcode)
+        {
+            //读取下达任务的任务信息
+            using (var cn = new MySqlConnection(AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText =
+                        "SELECT  * FROM T_SORTINGTASKISSUED where id='" + slocationcode + "'";
+                    //cm.Parameters.AddWithValue("@id", criteria.Value);
+                    using (var dr = new SafeDataReader(cm.ExecuteReader()))
+                    {
+                        while (dr.Read())
+                        {
+                            LoadProperty(IdProperty, dr.GetString("ID"));
+                            PLCFLAG = Convert.ToInt32(dr.GetString("PLCFLAG"));
+                            LoadProperty(PLCTASKNOProperty, dr.GetString("PLCTASKNO"));
+                        }
+                    }
+
+                    
+                }
+
+
+            }
+        }
+
+        [Transactional(TransactionalTypes.Manual)]
+        protected override void DataPortal_Insert()
+        {
+            //PLC写入下达任务
+
+            //throw new Exception("写入下达任务");
+
+
+            using (BypassPropertyChecks)
+            {
+                using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+                {
+                    cn.Open();
+                    using (var tran = cn.BeginTransaction())
+                    {
+                        try
+                        {
+                            using (var cm = cn.CreateCommand())
+                            {
+
+                                StringBuilder SQL = new StringBuilder();
+SQL.Append("INSERT ");
+SQL.Append("   INTO T_SORTINGTASKISSUED ");
+SQL.Append("        ( ");
+SQL.Append("            ID,PLCFLAG,PLCTASKNO,SLOCATION,ORDERNUMBER ");
+SQL.Append("        ) ");
+SQL.Append("        VALUES ");
+SQL.Append("        ( ");
+SQL.Append("            @ID,@PLCFLAG,@PLCTASKNO,@SLOCATION,@ORDERNUMBER ");
+                                SQL.Append("        )");
+                                cm.CommandText = SQL.ToString();
+                                cm.Parameters.AddWithValue("@ID", ID);
+                                cm.Parameters.AddWithValue("@PLCFLAG", PLCFLAG);
+                                cm.Parameters.AddWithValue("@PLCTASKNO", PLCTASKNO);
+                                cm.Parameters.AddWithValue("@SLOCATION", SLOCATION);
+                                cm.Parameters.AddWithValue("@ORDERNUMBER", ORDERNUMBER);
+                                cm.ExecuteNonQuery();
+                            }
+
+                            // update child objects
+                            FieldManager.UpdateChildren(this,tran);
+                            tran.Commit();
+
+                            MonitorLog monitorLog = MonitorLog.NewMonitorLog();
+                            monitorLog.LOGNAME = "PLC分拣任务下达";
+                            monitorLog.LOGINFO = "PLCTASKNO:" + PLCTASKNO.PadRight(10);
+                            foreach (SortingTaskIssuedDetail sortingTaskIssuedDetail in SortingTaskIssuedDetails)
+                            {
+                                monitorLog.LOGINFO += sortingTaskIssuedDetail.LINEBOXCODE + ":" +
+                                                      sortingTaskIssuedDetail.ADDRESSCODE + ":" +
+                                                      sortingTaskIssuedDetail.QTY + "  ";
+                            }
+                            monitorLog.LOGLOCATION = "PLC";
+                            monitorLog.LOGTYPE = 0;
+                            monitorLog.Save();
+                        }
+                        catch (Exception)
+                        {
+                            tran.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        [Transactional(TransactionalTypes.Manual)]
+        protected override void DataPortal_Update()
+        {
+            //PLC写入下达任务
+
+            //throw new Exception("写入下达任务");
+
+
+            using (BypassPropertyChecks)
+            {
+                using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+                {
+                    cn.Open();
+                    
+                        try
+                        {
+                            using (var cm = cn.CreateCommand())
+                            {
+                                
+                                StringBuilder SQL = new StringBuilder();
+                                SQL.Append("UPDATE T_SORTINGTASKISSUED ");
+                                SQL.Append("    SET PLCFLAG = " + PLCFLAG);
+                                SQL.Append("  WHERE ID = '0'");
+                                cm.CommandText = SQL.ToString();
+                                
+                                cm.ExecuteNonQuery();
+                            }
+                            
+                        }
+                        catch (Exception)
+                        {
+                            
+                            throw;
+                        }
+                   
+                }
+            }
+        }
+
+        #endregion
+
+        
+    }
+}

@@ -1,0 +1,3 @@
+<connectionStrings>
+  <add name="MobileCommerce" connectionString="data source=Database\hmsales_client;Password=" providerName="System.Data.SQLite" />  
+</connectionStrings>

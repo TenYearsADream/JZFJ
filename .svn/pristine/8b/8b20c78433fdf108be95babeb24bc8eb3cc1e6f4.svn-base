@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using BusinessLogic.SortingTask;
+
+namespace HDWLogic
+{
+    public class Cube
+    {
+        public int Indexno { get; set; }
+        public string Customername { get; set; }
+        public int NonCignum { get; set; }
+        public int FinCignum { get; set; }
+        public int TotCignum { get; set; }
+        public IEnumerable<SortingLineTaskDetail> FinSortingLineTaskDetails { get; set; }
+    }
+}

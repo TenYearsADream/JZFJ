@@ -1,0 +1,169 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MySql.Data.MySqlClient;
+
+namespace BusinessLogic.Log
+{
+    public class SortingFault
+    {
+        /// <summary>
+        /// 保存出现故障的烟道信息
+        /// 以提供理烟查询机使用
+        /// </summary>
+        /// <param name="faultbox">烟道编号</param>
+        /// <param name="faultstatus">故障代码</param>
+        static public void SaveFaultBoxStatus(int faultbox, int faultstatus,int faultputnum)
+        {
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    StringBuilder SQL = new StringBuilder();
+                    SQL.Append("UPDATE t_sortingstatus ");
+                    SQL.Append("    SET faultbox = @faultbox,faultstatus = @faultstatus,faultnum =@faultnum ");
+
+                    cm.CommandText = SQL.ToString();
+                    cm.Parameters.AddWithValue("@faultbox", faultbox);
+                    cm.Parameters.AddWithValue("@faultstatus", faultstatus);
+                    cm.Parameters.AddWithValue("@faultnum", faultputnum);
+                    cm.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 获取出现故障的烟道
+        /// </summary>
+        /// <returns></returns>
+        static public LineBoxStatus GetFaultLineBoxStatus()
+        {
+            LineBoxStatus lineBoxStatus;
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText = "SELECT * FROM t_sortingstatus";
+                    
+                    using (var dr = new Csla.Data.SafeDataReader(cm.ExecuteReader()))
+                    {
+                        dr.Read();
+                        if (dr.GetInt32("faultbox") != 0)
+                        {
+                            lineBoxStatus = new LineBoxStatus();
+                            lineBoxStatus.lineboxcode = dr.GetInt32("faultbox");
+                            lineBoxStatus.status = dr.GetInt32("faultstatus");
+                            lineBoxStatus.putnum = dr.GetInt32("faultnum");
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+                return lineBoxStatus;
+            }
+        }
+
+       
+    }
+
+    public class PutInfo
+    {
+        /// <summary>
+        /// 保存上层皮带的出烟订单号
+        /// </summary>
+        /// <param name="indexno"></param>
+        static public void SaveUpPutIndex(int indexno)
+        {
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText = "update t_sortingstatus set upputindex = " + indexno;
+                    cm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 保存下层皮带的出烟订单号
+        /// </summary>
+        /// <param name="indexno"></param>
+        static public void SaveDownPutIndex(int indexno)
+        {
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText = "update t_sortingstatus set downputindex = " + indexno;
+                    cm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取上层皮带出烟订单号
+        /// </summary>
+        /// <returns></returns>
+        static public int GetUpPutIndex()
+        {
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText = "SELECT * FROM t_sortingstatus";
+
+                    using (var dr = new Csla.Data.SafeDataReader(cm.ExecuteReader()))
+                    {
+                        dr.Read();
+                        return dr.GetInt32("upputindex");
+                        
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取下层皮带的出烟订单号
+        /// </summary>
+        /// <param name="indexno"></param>
+        static public int GetDownPutIndex()
+        {
+            using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+            {
+                cn.Open();
+                using (var cm = cn.CreateCommand())
+                {
+                    cm.CommandText = "SELECT * FROM t_sortingstatus";
+
+                    using (var dr = new Csla.Data.SafeDataReader(cm.ExecuteReader()))
+                    {
+                        dr.Read();
+                        return dr.GetInt32("downputindex");
+
+                    }
+                }
+            }
+        }
+ 
+
+    }
+
+   
+
+
+    public class LineBoxStatus
+    {
+        public int lineboxcode { get; set; }
+        public int status { get; set; }
+        public int putnum { get; set; }
+    }
+}

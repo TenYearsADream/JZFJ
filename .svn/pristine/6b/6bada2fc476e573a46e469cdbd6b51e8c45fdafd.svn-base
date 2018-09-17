@@ -1,0 +1,91 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using BusinessLogic.Common;
+using BusinessLogic.Search;
+
+namespace MonitorMain.CustomContorl
+{
+    public partial class C_Shelf : UserControl
+    {
+        private CigInfo _cigInfo;
+        private SortingLineBox _sortingLineBox;
+
+        
+        public C_Shelf(SortingLineBox sortingLineBox)
+        {
+            InitializeComponent();
+            _sortingLineBox = sortingLineBox;
+            labshelfcode.Text = _sortingLineBox.LineBoxCode;
+            progressBarX1.Maximum = _sortingLineBox.TOTQTY;
+            progressBarX1.Value = 0;
+            progressBarX1.Text = _sortingLineBox.CigName;
+            progressBarX1.TextVisible = false;
+            labcqty.Text = "";
+            //在父控件中透明
+            labcqty.Parent = progressBarX1;
+            labcqty.Left = progressBarX1.Left+5;
+            labcqty.Top = progressBarX1.Width /2;
+            
+            
+
+            labcqty.BackColor = Color.Transparent;
+
+            
+        }
+
+	    public void SetTooltip(int nonqty,int totqty)
+	    {
+		    this.superTooltip1.SetSuperTooltip(this.progressBarX1,
+			    new DevComponents.DotNetBar.SuperTooltipInfo("", "",
+				    _sortingLineBox.CigName + Environment.NewLine + "未分/总量:" +
+                    (nonqty + "/" + totqty).ToString(), null, null,
+				    DevComponents.DotNetBar.eTooltipColor.System));
+	    }
+
+
+	    private void C_Shelf_Load(object sender, EventArgs e)
+        {
+            Size = new System.Drawing.Size(18 , 110);
+            
+            //labcqty.Width = progressBarX1.Width;
+            labcqty.TextAlignment = StringAlignment.Center;
+            labcqty.TextLineAlignment = StringAlignment.Center;
+        }
+
+        public string Lineboxcode
+        {
+            get { return labshelfcode.Text; }
+            set { labshelfcode.Text = value; }
+        }
+
+        public string PickNum
+        {
+            get { return labcqty.Text; }
+            set { labcqty.Text = value; }
+        }
+
+        public string CigName
+        {
+            get { return progressBarX1.Text; }
+            set { progressBarX1.Text = value; }
+        }
+
+        public void ShowCigName(bool isshow)
+        {
+            progressBarX1.TextVisible = isshow;
+        }
+
+        public void ShowCigQty(int qty)
+        {
+            progressBarX1.Value = qty;
+        }
+
+        
+    }
+}

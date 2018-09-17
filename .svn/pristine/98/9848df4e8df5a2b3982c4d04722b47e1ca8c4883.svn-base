@@ -1,0 +1,800 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using BusinessLogic;
+using BusinessLogic.Box;
+using BusinessLogic.Common;
+using BusinessLogic.SortingTask;
+using BusinessLogic.INTASKS;
+using BusinessLogic.Search;
+using System.Configuration;
+using BusinessLogic.arrive;
+using BusinessLogic.Log;
+using BusinessLogic.Download;
+using AppUtility;
+
+namespace PlcContract
+{
+    public class OperateOpcAndSoft
+    {
+        static public OpcPlc plc;
+        DB15List db15List = new DB15List(); //初始化DB15List中dictionary的值
+        IntaskList taskList = new IntaskList(); //初始化DB52中的dictionary的值
+        SpecificationList specifitionList = new SpecificationList(); //初始化DB54的dictionary的值
+
+
+        public static string ItemList()
+        {
+            return plc.ItemList();
+        }
+
+
+        /// <summary>
+        /// 当天补货品牌写入卧式仓补货品规地址区
+        /// </summary>
+        /// <param name="task">当天补货品牌</param>
+        /// <returns>成功返回true，失败返回false</returns>
+        public PlCResult InDataToTaskAddress()
+        {
+            PlCResult plCResult = new PlCResult();
+            try
+            {
+                bool isRun = false;
+                Dictionary<int, string> bindcig = BusinessLogic.INTASKS.InTask.GetBindCigCode();
+                if (bindcig == null)
+                {
+                    plCResult.Succeed = false;
+                    plCResult.Exception = "无法获取通道机绑定卷烟！";
+                    return plCResult;
+                }
+
+                foreach (KeyValuePair<int, string> keyValuePair in bindcig)
+                {
+                    if (keyValuePair.Key == 85)
+                    {
+                        PlcValue writeValue = new PlcValue();
+                        writeValue.Value = keyValuePair.Value;
+                        isRun = plc.SetPlcValue(ItemListEnum.DB53DInt200, writeValue);
+                    }
+                    if (keyValuePair.Key == 86)
+                    {
+                        PlcValue writeValue = new PlcValue();
+                        writeValue.Value = keyValuePair.Value;
+                        isRun = plc.SetPlcValue(ItemListEnum.DB53DInt204, writeValue);
+                    }
+                    if (keyValuePair.Key == 87)
+                    {
+                        PlcValue writeValue = new PlcValue();
+                        writeValue.Value = keyValuePair.Value;
+                        isRun = plc.SetPlcValue(ItemListEnum.DB53DInt208, writeValue);
+                    }
+                    if (keyValuePair.Key == 88)
+                    {
+                        PlcValue writeValue = new PlcValue();
+                        writeValue.Value = keyValuePair.Value;
+                        isRun = plc.SetPlcValue(ItemListEnum.DB53DInt212, writeValue);
+                    }
+                    if (keyValuePair.Key == 89)
+                    {
+                        PlcValue writeValue = new PlcValue();
+                        writeValue.Value = keyValuePair.Value;
+                        isRun = plc.SetPlcValue(ItemListEnum.DB53DInt216, writeValue);
+                    }
+                    
+                }
+
+                //写日志
+                MonitorLog monitorLog = MonitorLog.NewMonitorLog();
+                monitorLog.LOGNAME = "PLC通道品牌下达";
+                foreach (KeyValuePair<int, string> keyValuePair in bindcig)
+                {
+                    monitorLog.LOGINFO += keyValuePair.Key + "-CIG:" + keyValuePair.Value + ";";
+                }
+                monitorLog.LOGLOCATION = "PLC";
+                monitorLog.LOGTYPE = 0;
+                monitorLog.Save();
+
+                plCResult.Succeed = isRun;
+
+                if (!isRun)
+                {
+                    plCResult.Exception = "PLC补货绑定品牌写入失败！";
+                }
+                return plCResult;
+
+            }
+            catch (Exception ex)
+            {
+                plCResult.Succeed = false;
+                plCResult.Exception = ex.Message;
+                return plCResult;
+            }
+        }
+
+        
+        /// <summary>
+        /// 补货任务下达方法
+        /// </summary>
+        /// <param name="task">未下达且序号最小的任务一条</param>
+        /// <returns></returns>
+        public PlCResult ReplenishmentTask(InTask task)
+        {
+            bool isRun = false;
+            PlcValue writeValue;
+            PlCResult plCResult = new PlCResult();
+            try
+            {
+                PlcValue readValue = plc.GetPlcValue(ItemListEnum.db51Int0);
+                if (Convert.ToInt32(readValue.Value) == 0)
+                {
+                    IntaskModel mdl = IntaskList.dic.FirstOrDefault(o => o.Key == Convert.ToInt32(task.PLCADDRESS)).Value;
+
+                    int value = Convert.ToInt32(plc.GetPlcValue(mdl.TaskNoAddr).Value);
+
+                    if (task.INDEXNO <= value)
+                    {
+                        task.Status = 1;
+                        task.SaveInTaskProcess(task.ID);
+                        plCResult.Succeed = false;
+                        plCResult.Exception = task.INDEXNO + "已经下达过!";
+                        return plCResult;
+                    }
+                    else
+                    {
+                        writeValue = new PlcValue();
+                        writeValue.Value = task.INDEXNO;
+                        isRun = plc.SetPlcValue(ItemListEnum.db51Int2, writeValue);
+
+                        if (isRun)
+                        {
+                            writeValue = new PlcValue();
+                            writeValue.Value = task.ADDRESSCODE;
+                            isRun = plc.SetPlcValue(ItemListEnum.db51Int4, writeValue);
+                        }
+
+                        if (isRun)
+                        {
+                            writeValue = new PlcValue();
+                            writeValue.Value = task.BARCODE.Replace("6901028", "");
+                            isRun = plc.SetPlcValue(ItemListEnum.db51DInt6, writeValue);
+                        }
+
+
+                        if (isRun)
+                        {
+                            writeValue = new PlcValue();
+
+                            if (task.INPORTCODE == "1")
+                            {
+                                writeValue.Value = 1;
+                                isRun = plc.SetPlcValue(ItemListEnum.db51Int10, writeValue);
+                            }
+                            else if (task.INPORTCODE == "2")
+                            {
+                                writeValue.Value = 2;
+                                isRun = plc.SetPlcValue(ItemListEnum.db51Int10, writeValue);
+                            }
+                        }
+
+
+                        if (isRun)
+                        {
+                            writeValue = new PlcValue();
+                            writeValue.Value = 1;
+                            isRun = plc.SetPlcValue(ItemListEnum.db51Int0, writeValue);
+                        }
+
+                        if (isRun)
+                        {
+                            task.Status = 1;
+                            task.SaveInTaskProcess(task.ID);
+                            plCResult.Succeed = true;
+                        }
+                        else
+                        {
+                            plCResult.Succeed = false;
+                            plCResult.Exception = "任务号" + task.INDEXNO + "PLC补货任务写入异常";
+                        }
+                    }
+                }
+                else
+                {
+                    //如果下达区的标志为1不能下达时
+                    //判断需要下达的任务号小于下达区的任务号直接改变任务状态
+                    readValue = plc.GetPlcValue(ItemListEnum.db51Int2);
+                    if (task.INDEXNO <= Convert.ToInt32(readValue.Value))
+                    {
+                        task.Status = 1;
+                        task.SaveInTaskProcess(task.ID);
+                        plCResult.Succeed = false;
+                        plCResult.Exception = task.INDEXNO + "已经下达过!";
+                        return plCResult;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                plCResult.Succeed = false;
+                plCResult.Exception = ex.Message;
+
+                return plCResult;
+            }
+            return plCResult;
+        }
+
+
+        /// <summary>
+        /// 分拣任务下达
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        public PlCResult TaskIssued(BusinessLogic.SortingTask.SortingLineTask task)
+        {
+            PlCResult plCResult = new PlCResult();
+            
+            bool isRun = false;
+            string isStop = "";
+            
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                plCResult.Succeed = false;
+                plCResult.Exception = ex.Message;
+                return plCResult;
+            }
+
+            return plCResult;
+        }
+
+
+        public SortingLineTask TaskFinish()
+        {
+            bool isRun = false;
+            SortingArrive sortingArrive = new SortingArrive();
+            SorgingPackingFinished sorgingPackingFinished = new SorgingPackingFinished();
+            SortingLineTask sortingLineTask = null;
+            try
+            {
+                //扫描烟条到达信号地址区是否有已到达的任务（DB10：DBW50）
+                MonitorLog monitorLog;
+                for (int i = 1; i <= sortingArrive.Count; i++)
+                {
+                    int arrivevalue = 0;
+                    //获取地址内的值
+                    string a = sortingArrive[i];
+                    arrivevalue = Convert.ToInt32(plc.GetPlcValue(sortingArrive[i]).Value);
+                    //非0表示已有完成的客户订单
+                    if (arrivevalue != 0)
+                    {
+                        //获取DB15中对应的分拣任务号
+                        DB15Model mdl = DB15List.dicArr.FirstOrDefault(o => o.Key == i).Value;
+                        string taskno = plc.GetPlcValue(mdl.taskNo).Value.ToString();
+
+                        //通过任务号关联订单中的序号获取分拣订单保存                       
+                        if (Convert.ToInt32(taskno) > 0)
+                        {
+                            sortingLineTask = SortingLineTask.GetSortingLineByIndex(taskno);
+                            sortingLineTask.Status = 2;
+                            sortingLineTask.SaveSortingTaskProcess(sortingLineTask.ID);
+                            sortingLineTask.SaveStatus();
+
+
+                            //写日志
+                            monitorLog = MonitorLog.NewMonitorLog();
+                            monitorLog.LOGNAME = "INDEXNO:" + sortingLineTask.INDEXNO + " CUSTNO:" + sortingLineTask.CUSTCODE + " 分拣任务到达数据库保存";
+                            monitorLog.LOGINFO = "";
+                            monitorLog.LOGLOCATION = "PLC";
+                            monitorLog.LOGTYPE = 0;
+                            monitorLog.Save();
+                        }
+                        //成功后保存发送的烟包信息
+                        //List<CigBoxInfo> cigBoxInfoList = CigBoxInfoList.GetBoxInfoByCustiomNo(sortingLineTask.CUSTCODE,
+                        //    sortingLineTask.INDEXNO.ToString(), SortingLine.GetNonSortingLineCode());
+                        //foreach (CigBoxInfo cigBoxInfo in cigBoxInfoList)
+                        //{
+                        //    CigBoxInfo.SaveProcess(cigBoxInfo.ID, 2);
+                        //}
+
+                        //写日志
+                        //monitorLog = MonitorLog.NewMonitorLog();
+                        //monitorLog.LOGNAME = "INDEXNO:" + cigBoxInfoList[0].IndexNO + "  分拣烟包到达保存";
+                        //monitorLog.LOGINFO = "";
+                        //monitorLog.LOGLOCATION = "PLC";
+                        //monitorLog.LOGTYPE = 0;
+                        //monitorLog.Save();
+
+
+                        //查看装箱数据块中是否已修改
+                        //==0表示未修改可以写数据
+                        if (Convert.ToInt32(plc.GetPlcValue(sorgingPackingFinished[i]).Value) == 0)
+                        {
+                            //将装箱完成信号地址区中对应的出口置1（DB10：DBW0）
+                            PlcValue writeVlaue = new PlcValue();
+                            writeVlaue.Value = arrivevalue;
+                            isRun = plc.SetPlcValue(sorgingPackingFinished[i], writeVlaue);
+                            //写值不成功返回空对象
+                            if (!isRun)
+                            {
+                                sortingLineTask = null;
+                            }
+                            else
+                            {
+                                //写日志
+                                monitorLog = MonitorLog.NewMonitorLog();
+                                monitorLog.LOGNAME = "INDEXNO:" + sortingLineTask.INDEXNO + "  地址位" + sorgingPackingFinished[i] + ":装箱修改为1";
+                                monitorLog.LOGINFO = "";
+                                monitorLog.LOGLOCATION = "PLC";
+                                monitorLog.LOGTYPE = 0;
+                                monitorLog.Save();
+                            }
+                            break;
+                        }
+                        //==1表示已修改过继续下一个地址位
+                        else
+                        {
+                            sortingLineTask = null;
+                            //写日志
+                            monitorLog = MonitorLog.NewMonitorLog();
+                            monitorLog.LOGNAME = "装箱已经修改过为1";
+                            monitorLog.LOGINFO = "";
+                            monitorLog.LOGLOCATION = "PLC";
+                            monitorLog.LOGTYPE = 0;
+                            monitorLog.Save();
+                        }
+                    }
+                    Thread.Sleep(50);
+                }
+                //break后执行
+                //写日志
+                //monitorLog = MonitorLog.NewMonitorLog();
+                //monitorLog.LOGNAME = "分拣任务到达循环结束";
+                //monitorLog.LOGINFO = "";
+                //monitorLog.LOGLOCATION = "PLC";
+                //monitorLog.LOGTYPE = 0;
+                //monitorLog.Save();
+
+            }
+            catch (Exception ex)
+            {
+                //写日志
+                MonitorLog monitorLog = MonitorLog.NewMonitorLog();
+                monitorLog.LOGNAME = "PLC分拣任务到达异常";
+                monitorLog.LOGINFO = ex.Message;
+                monitorLog.LOGLOCATION = "PLC";
+                monitorLog.LOGTYPE = 0;
+                monitorLog.Save();
+                return null;
+            }
+
+            return sortingLineTask;
+        }
+
+
+        /// <summary>
+        /// 当天卧式仓道分拣量写入地址区，用于PLC将最后剩余的卷烟打出
+        /// </summary>
+        /// <returns>成功返回true，失败返回false</returns>
+        public PlCResult OutDataToTaskAddress()
+        {
+            PlCResult plCResult = new PlCResult();
+            try
+            {
+                bool isRun = true;
+                LineBoxProcessList lineboxlist = LineBoxProcessList.GetList();
+
+
+                if (lineboxlist == null)
+                {
+                    plCResult.Succeed = false;
+                    plCResult.Exception = "无法获取分拣通道机分拣总量！";
+                    return plCResult;
+                }
+
+                foreach (LineBoxProcessInfo lineboxprocessinfo in lineboxlist)
+                {
+                    if (isRun)
+                    {
+                        if (lineboxprocessinfo.LINEBOXCODE == "85")
+                        {
+                            PlcValue writeValue = new PlcValue();
+                            writeValue.Value = lineboxprocessinfo.TOTQTY;
+                            isRun = plc.SetPlcValue(ItemListEnum.db51Int10, writeValue);
+                        }
+                        if (lineboxprocessinfo.LINEBOXCODE == "86")
+                        {
+                            PlcValue writeValue = new PlcValue();
+                            writeValue.Value = lineboxprocessinfo.TOTQTY;
+                            isRun = plc.SetPlcValue(ItemListEnum.db51Int12, writeValue);
+                        }
+                        if (lineboxprocessinfo.LINEBOXCODE == "87")
+                        {
+                            PlcValue writeValue = new PlcValue();
+                            writeValue.Value = lineboxprocessinfo.TOTQTY;
+                            isRun = plc.SetPlcValue(ItemListEnum.db51Int14, writeValue);
+                        }
+                        if (lineboxprocessinfo.LINEBOXCODE == "88") 
+                        {
+                            PlcValue writeValue = new PlcValue();
+                            writeValue.Value = lineboxprocessinfo.TOTQTY;
+                            isRun = plc.SetPlcValue(ItemListEnum.db51Int16, writeValue);
+                        }
+                        if (lineboxprocessinfo.LINEBOXCODE == "89")
+                        {
+                            PlcValue writeValue = new PlcValue();
+                            writeValue.Value = lineboxprocessinfo.TOTQTY;
+                            isRun = plc.SetPlcValue(ItemListEnum.db51Int18, writeValue);
+                        }
+                        
+                    }
+                }
+
+                plCResult.Succeed = isRun;
+
+                if (!isRun)
+                {
+                    plCResult.Exception = "PLC分拣通道机分拣总量写入失败！";
+                    return plCResult;
+                }
+                else
+                {
+                    //写日志
+                    MonitorLog monitorLog = MonitorLog.NewMonitorLog();
+                    monitorLog.LOGNAME = "PLC分拣通道机分拣总量下达";
+                    foreach (LineBoxProcessInfo lineboxprocessinfo in lineboxlist)
+                    {
+                        if (Convert.ToInt16(lineboxprocessinfo.LINEBOXCODE) >= 67)
+                        {
+                            monitorLog.LOGINFO += " 通道:" + lineboxprocessinfo.LINEBOXCODE + " - 数量" + lineboxprocessinfo.TOTQTY + "; ";
+                        }
+                    }
+                    monitorLog.LOGLOCATION = "PLC";
+                    monitorLog.LOGTYPE = 0;
+                    monitorLog.Save();
+                    return plCResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                plCResult.Succeed = false;
+                plCResult.Exception = ex.Message;
+                return plCResult;
+            }
+        }
+
+        /// <summary>
+        /// 从PLC获取皮带上卷烟的数量
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<int, int> GetPutOutNum()
+        {
+            PutOutLineBoxNum putoutnum = new PutOutLineBoxNum();
+            Dictionary<int, int> lineboxsnum = new Dictionary<int, int>();
+
+            foreach (KeyValuePair<int,string> item in putoutnum)
+            {
+                PlcValue readValue = new PlcValue();
+                readValue = plc.GetPlcValue(item.Value);
+                lineboxsnum.Add(item.Key,Convert.ToInt32(readValue.Value)) ;
+            }
+            return lineboxsnum;
+        }
+
+
+        /// <summary>
+        /// 从PLC获取皮带上混仓卷烟的数量
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<int, int> GetDynamicBoxPutNum()
+        {
+            PutOutLineBoxNum putoutnum = new PutOutLineBoxNum();
+            Dictionary<int, int> lineboxsnum = new Dictionary<int, int>();
+
+
+            PlcValue readValue = new PlcValue();
+            readValue = plc.GetPlcValue(putoutnum[73]);
+            lineboxsnum.Add(73, Convert.ToInt32(readValue.Value));
+            return lineboxsnum;
+        }
+
+
+        /// <summary>
+        /// 获取合单上层皮带上订单的编号
+        /// </summary>
+        /// <returns></returns>
+        public int GetUpPutIndexno()
+        {
+            //SortingLineTaskList sortinglinetasklist = SortingLineTaskList.GetFinSortingLineTaskList(new QueryCondition("1", true, ""));
+          
+            PlcValue readValue = new PlcValue();
+            readValue = plc.GetPlcValue(ItemListEnum.DB57Int172);
+            
+            if (Convert.ToInt32(readValue.Value) != 0)
+            {
+                DB15Model mdl = DB15List.dicArr[Convert.ToInt32(readValue.Value)];
+                if (mdl != null)
+                {
+                    int value = (int)plc.GetPlcValue(mdl.taskNo).Value;
+                    return value;
+                }
+
+                
+            }
+            return 0;            
+        }
+
+        /// <summary>
+        /// 获取合单下层皮带上订单的编号
+        /// </summary>
+        /// <returns></returns>
+        public int GetDownPutIndexno()
+        {
+            PlcValue readValue = new PlcValue();
+            readValue = plc.GetPlcValue(ItemListEnum.DB57Int182);
+
+            if (Convert.ToInt32(readValue.Value) != 0)
+            {
+                DB15Model mdl = DB15List.dicArr[Convert.ToInt32(readValue.Value)];
+                if (mdl != null)
+                {
+                    int value = (int)plc.GetPlcValue(mdl.taskNo).Value;
+                    return value;
+                }
+
+
+            }
+            return 0;          
+           
+        }
+
+
+        /// <summary>
+        /// 获取烟仓打烟的异常状态
+        /// </summary>
+        /// <returns></returns>
+        public LineBoxStatus GetLineBoxException()
+        {
+            LineBoxStatus lineboxstatus = null;
+            for (int i = 3; i <= 181; i = i +2)
+            {
+                PlcValue readValue = new PlcValue();
+                string a = "S7:[S7 connection_1]DB4,B" + i.ToString();
+                readValue = plc.GetPlcValue(a);
+
+                //只取异常值的低四位进行判断
+                int value = Convert.ToInt32((Convert.ToByte(readValue.Value) & 0xf));
+
+                if (value == 8)
+                {
+                    lineboxstatus  = new LineBoxStatus();
+                    //plc中有挡板占用85仓的地址所以85-89仓地址需要向前挪动一个
+                    if (i >= 173)
+                    {
+                        lineboxstatus.lineboxcode = ((i - 1) / 2) - 1;
+                    }
+                    else if (i != 171)
+                    {
+                        lineboxstatus.lineboxcode = (i - 1) / 2;
+                    }
+                    
+                    lineboxstatus.status = 8;
+                    lineboxstatus.putnum = GetTaskOutNum(lineboxstatus.lineboxcode);
+                    return lineboxstatus;
+                }
+
+                if (value == 4)
+                {
+                    lineboxstatus = new LineBoxStatus();
+                    if (i >= 173)
+                    {
+                        lineboxstatus.lineboxcode = ((i - 1) / 2) - 1;
+                    }
+                    else if (i != 171)
+                    {
+                        lineboxstatus.lineboxcode = (i - 1) / 2;
+                    }
+                    lineboxstatus.status = 4;
+                    lineboxstatus.putnum = GetTaskOutNum(lineboxstatus.lineboxcode);
+                    return lineboxstatus;
+                }
+
+
+                //只取异常值的低四位进行判断
+                value = Convert.ToInt32((Convert.ToByte(readValue.Value) & 0x10));
+
+                if (value == 16)
+                {
+                    lineboxstatus = new LineBoxStatus();
+                    if (i >= 173)
+                    {
+                        lineboxstatus.lineboxcode = ((i - 1) / 2) - 1;
+                    }
+                    else if (i != 171)
+                    {
+                        lineboxstatus.lineboxcode = (i - 1) / 2;
+                    }
+                    lineboxstatus.status = 16;
+                    lineboxstatus.putnum = GetTaskOutNum(lineboxstatus.lineboxcode);
+                    return lineboxstatus;
+                }
+            }
+            
+            return lineboxstatus;               
+        }
+
+        /// <summary>
+        /// 获取子线挂烟的状态
+        /// </summary>
+        /// <returns></returns>
+        public LineBoxStatus SubLineStatus()
+        {            
+            LineBoxStatus lineboxstatus = null;
+            HangCigLineBox hangCigLineBox = new HangCigLineBox();//挂烟的PLC地址
+            foreach (KeyValuePair<int, string> keyValuePair in hangCigLineBox)
+            {
+                PlcValue readValue = new PlcValue();
+                string a = keyValuePair.Value;
+                readValue = plc.GetPlcValue(a);
+                if (Convert.ToBoolean(readValue.Value))
+                {
+                    lineboxstatus = new LineBoxStatus();
+                    lineboxstatus.lineboxcode = keyValuePair.Key;
+                    lineboxstatus.status = 1;
+                    return lineboxstatus;
+                }
+            }
+            return null;
+
+        }
+
+        /// <summary>
+        /// 获取正在分拣的任务号
+        /// </summary>
+        public int GetSortingTaskNo()
+        {
+            SortingTaskStatus sortingTaskStatus = new SortingTaskStatus();
+            DB15Model db15Model = null;
+            int taskid = 0;
+            foreach (KeyValuePair<int,string> sortingValuePair in sortingTaskStatus)
+            {
+                PlcValue readValue = new PlcValue();
+                readValue = plc.GetPlcValue(sortingValuePair.Value);
+                if (Convert.ToInt32(readValue.Value) == 2)
+                {
+                    db15Model = DB15List.dicArr[sortingValuePair.Key];
+                    if (Convert.ToInt32(plc.GetPlcValue(db15Model.taskNo).Value) > taskid)
+                        taskid = Convert.ToInt32(plc.GetPlcValue(db15Model.taskNo).Value);
+                    
+                }
+            }
+            
+             return (int)taskid;
+            
+        }
+
+        public void ResetFlag()
+        {
+            PlcValue writeVlaue = new PlcValue();
+            writeVlaue.Value = 0;
+            plc.SetPlcValue(new SortingIssued()["flag"], writeVlaue);
+        }
+
+        /// <summary>
+        /// 订单从哪个包装机出
+        /// 0，双边 1，1号 2，2号
+        /// </summary>
+        public void SetOutPort()
+        {
+            PlcValue writeVlaue = new PlcValue();
+            writeVlaue.Value = DownloadData.GetTaskOutPortByLoc();
+            plc.SetPlcValue("S7:[S7 connection_1]DB51,INT20", writeVlaue);
+        }
+
+        /// <summary>
+        /// 显示出错烟仓打出量
+        /// 用于数码管非出错烟仓填0
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public Dictionary<int, int> GetTaskOutNum(object o)
+        {
+            Dictionary<int, int> senDictionary = new Dictionary<int, int>();
+
+            for (int i = 1; i <= 84; i++)
+            {
+                senDictionary.Add(i, 0);
+            }
+
+            PutTaskNum puttasknum = new PutTaskNum();
+            PlcValue readValue = new PlcValue();
+            readValue = plc.GetPlcValue(puttasknum[Convert.ToInt32(o)]);
+            //如果是双仓
+            if (AppUtil.Put2LineBox.Contains(o.ToString()))
+            {
+                //数量要显示到单仓上
+                senDictionary[Convert.ToInt32(o) - 1] = Convert.ToInt32(readValue.Value);
+            }
+            else
+            {
+                senDictionary[Convert.ToInt32(o)] = Convert.ToInt32(readValue.Value);
+            }
+            
+            return senDictionary;
+        }
+
+        /// <summary>
+        /// 只获取当前仓道的打出量
+        /// </summary>
+        /// <param name="lineboxcode"></param>
+        /// <returns></returns>
+        public int GetTaskOutNum(int lineboxcode)
+        {
+            PutTaskNum puttasknum = new PutTaskNum();
+            PlcValue readValue = new PlcValue();
+            readValue = plc.GetPlcValue(puttasknum[lineboxcode]);
+            return Convert.ToInt32( readValue.Value);
+        }
+
+        /// <summary>
+        /// 获取物理盘点按钮的状态
+        /// </summary>
+        /// <returns></returns>
+        public bool GetPDInfo()
+        {
+            PlcValue readValue = new PlcValue();
+            readValue = plc.GetPlcValue("S7:[S7 connection_1]IX52.6");
+            return Convert.ToBoolean(readValue.Value);
+        }
+
+        /// <summary>
+        /// 获取小车是否到位标识
+        /// 对于100型其实是判断分户盒是否被扫到（100型可以认为是2个虚拟小车容器）
+        /// 对于200型是小车到位
+        /// </summary>
+        /// <returns></returns>
+        public bool GetCubeReady()
+        {
+            SortingTaskArrive sortingTaskArrive = SortingTaskArrive.GetSortingTaskArrive("0");
+            if (sortingTaskArrive.Value == "1")
+            {
+                sortingTaskArrive.Value = "0";
+                sortingTaskArrive.Save();
+                return true;    
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        public void SetOrderNum(int ordernum)
+        {
+            
+        }
+
+        /// <summary>
+        /// 通知PLC小车可以前进
+        /// </summary>
+        public void SetCubeRun()
+        {
+            
+        }
+       
+    }
+
+
+
+
+    public class PlCResult
+    {
+        public bool Succeed { get; set; }
+        public string Exception { get; set; }
+    }
+
+    
+}

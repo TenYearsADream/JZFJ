@@ -1,0 +1,1050 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{40793A27-478B-4357-B4C3-FC8943131F3D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MonitorMain</RootNamespace>
+    <AssemblyName>MonitorMain</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <ApplicationIcon>20141201050815887_easyicon_net_256.ico</ApplicationIcon>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\MonitorMain.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\MonitorMain.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'New|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\New\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\MonitorMain.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'New|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\New\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\MonitorMain.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Csla, Version=3.8.4.0, Culture=neutral, PublicKeyToken=93be5fdc093e4c30, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>安装必备\Csla.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Design, Version=8.8.0.0, Culture=neutral, PublicKeyToken=e116d99a00eca71b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\DotNetBar\Bin\DevComponents.DotNetBar.Design.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2, Version=8.8.0.0, Culture=neutral, PublicKeyToken=e116d99a00eca71b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\DotNetBar\Bin\DevComponents.DotNetBar2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevComponents.Instrumentation, Version=8.8.0.0, Culture=neutral, PublicKeyToken=e116d99a00eca71b">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>安装必备\IBM.Data.DB2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=5.2.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>安装必备\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VistTime, Version=1.0.3398.31479, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>安装必备\VistTime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CigTransfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CigTransfer.Designer.cs">
+      <DependentUpon>CigTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CBox.Designer.cs">
+      <DependentUpon>CBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CCigTransfer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CCigTransfer.Designer.cs">
+      <DependentUpon>CCigTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CCube.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CCube.Designer.cs">
+      <DependentUpon>CCube.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CDisplayCigName.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CDisplayCigName.Designer.cs">
+      <DependentUpon>CDisplayCigName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CInTask.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CInTask.Designer.cs">
+      <DependentUpon>CInTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CLog.Designer.cs">
+      <DependentUpon>CLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CMaterials.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CMaterials.Designer.cs">
+      <DependentUpon>CMaterials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CMaterialsDetal.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CMaterialsDetal.Designer.cs">
+      <DependentUpon>CMaterialsDetal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\COutPort.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\COutPort.Designer.cs">
+      <DependentUpon>COutPort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\COutPortTransfer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\COutPortTransfer.Designer.cs">
+      <DependentUpon>COutPortTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\C_Shelf.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\C_Shelf.Designer.cs">
+      <DependentUpon>C_Shelf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\C_SortingMain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\C_SortingMain.Designer.cs">
+      <DependentUpon>C_SortingMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\DataGridViewTranslation.cs" />
+    <Compile Include="CustomContorl\DoubleBufferDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\DoubleBufferDataGridView.Designer.cs">
+      <DependentUpon>DoubleBufferDataGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\FootSumLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\LedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\LedForm.Designer.cs">
+      <DependentUpon>LedForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Nixielight.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Nixielight.Designer.cs">
+      <DependentUpon>Nixielight.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CBoxSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CBoxSearch.Designer.cs">
+      <DependentUpon>CBoxSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CCigInfoSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CCigInfoSearch.designer.cs">
+      <DependentUpon>CCigInfoSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CInSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CInSearch.Designer.cs">
+      <DependentUpon>CInSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CLineBoxSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CLineBoxSearch.Designer.cs">
+      <DependentUpon>CLineBoxSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CSortingCigSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CSortingCigSearch.Designer.cs">
+      <DependentUpon>CSortingCigSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CSortingEfficiency.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CSortingEfficiency.Designer.cs">
+      <DependentUpon>CSortingEfficiency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CSortingTask.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CSortingTask.Designer.cs">
+      <DependentUpon>CSortingTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CAbnSortingTask.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CAbnSortingTask.Designer.cs">
+      <DependentUpon>CAbnSortingTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CSortingEfficiencyDis.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CSortingEfficiencyDis.Designer.cs">
+      <DependentUpon>CSortingEfficiencyDis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CSortingTaskSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CSortingTaskSearch.Designer.cs">
+      <DependentUpon>CSortingTaskSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CustomButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CLogSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CLogSearch.Designer.cs">
+      <DependentUpon>CLogSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\SortableBindingList.cs" />
+    <Compile Include="CustomContorl\Search\CAbnBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\Search\CAbnBox.Designer.cs">
+      <DependentUpon>CAbnBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CPutPort.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CPutPort.Designer.cs">
+      <DependentUpon>CPutPort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomContorl\CTask.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\CTask.Designer.cs">
+      <DependentUpon>CTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DisLineBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisLineBox.Designer.cs">
+      <DependentUpon>DisLineBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayCigName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisplayCigName.Designer.cs">
+      <DependentUpon>DisplayCigName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DownLoadProcessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DownLoadProcessForm.Designer.cs">
+      <DependentUpon>DownLoadProcessForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DynamicBoxForm.Designer.cs">
+      <DependentUpon>DynamicBoxForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EfficeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EfficeForm.Designer.cs">
+      <DependentUpon>EfficeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditCubeLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditCubeLocation.Designer.cs">
+      <DependentUpon>frmEditCubeLocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLineBoxSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLineBoxSearch.Designer.cs">
+      <DependentUpon>frmLineBoxSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HelperClass\ComponentLibraryLoader.cs" />
+    <Compile Include="HelperClass\IDEContainer.cs" />
+    <Compile Include="CustomContorl\OpcItemList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomContorl\OpcItemList.Designer.cs">
+      <DependentUpon>OpcItemList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaterialsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaterialsForm.Designer.cs">
+      <DependentUpon>MaterialsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OutPortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutPortForm.Designer.cs">
+      <DependentUpon>OutPortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OutPortTransferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutPortTransferForm.Designer.cs">
+      <DependentUpon>OutPortTransferForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="SLogoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SLogoForm.Designer.cs">
+      <DependentUpon>SLogoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CustomToolboxService.cs" />
+    <Compile Include="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TaskList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TaskList.Designer.cs">
+      <DependentUpon>TaskList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolView\CreateForms.cs" />
+    <Compile Include="ToolView\DummyOutputWindow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ToolView\DummyOutputWindow.Designer.cs">
+      <DependentUpon>DummyOutputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FJMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FJMainForm.Designer.cs">
+      <DependentUpon>FJMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BHMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BHMainForm.Designer.cs">
+      <DependentUpon>BHMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InPortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InPortForm.Designer.cs">
+      <DependentUpon>InPortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PutPortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PutPortForm.Designer.cs">
+      <DependentUpon>PutPortForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CigTransfer.resx">
+      <DependentUpon>CigTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CBox.resx">
+      <DependentUpon>CBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CCigTransfer.resx">
+      <DependentUpon>CCigTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CCube.resx">
+      <DependentUpon>CCube.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CDisplayCigName.resx">
+      <DependentUpon>CDisplayCigName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CInTask.resx">
+      <DependentUpon>CInTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CLog.resx">
+      <DependentUpon>CLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CMaterials.resx">
+      <DependentUpon>CMaterials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CMaterialsDetal.resx">
+      <DependentUpon>CMaterialsDetal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\COutPort.resx">
+      <DependentUpon>COutPort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\COutPortTransfer.resx">
+      <DependentUpon>COutPortTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\C_Shelf.resx">
+      <DependentUpon>C_Shelf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\C_SortingMain.resx">
+      <DependentUpon>C_SortingMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\DoubleBufferDataGridView.resx">
+      <DependentUpon>DoubleBufferDataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\FootSumLabel.resx">
+      <DependentUpon>FootSumLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\LedForm.resx">
+      <DependentUpon>LedForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Nixielight.resx">
+      <DependentUpon>Nixielight.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CBoxSearch.resx">
+      <DependentUpon>CBoxSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CCigInfoSearch.resx">
+      <DependentUpon>CCigInfoSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CInSearch.resx">
+      <DependentUpon>CInSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CLineBoxSearch.resx">
+      <DependentUpon>CLineBoxSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CSortingCigSearch.resx">
+      <DependentUpon>CSortingCigSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CSortingEfficiency.resx">
+      <DependentUpon>CSortingEfficiency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CSortingTask.resx">
+      <DependentUpon>CSortingTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CAbnSortingTask.resx">
+      <DependentUpon>CAbnSortingTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CSortingEfficiencyDis.resx">
+      <DependentUpon>CSortingEfficiencyDis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CSortingTaskSearch.resx">
+      <DependentUpon>CSortingTaskSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CAbnBox.resx">
+      <DependentUpon>CAbnBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CustomButton.resx">
+      <DependentUpon>CustomButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\Search\CLogSearch.resx">
+      <DependentUpon>CLogSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CPutPort.resx">
+      <DependentUpon>CPutPort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\CTask.resx">
+      <DependentUpon>CTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisLineBox.resx">
+      <DependentUpon>DisLineBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisplayCigName.resx">
+      <DependentUpon>DisplayCigName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DownLoadProcessForm.resx">
+      <DependentUpon>DownLoadProcessForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomContorl\OpcItemList.resx">
+      <DependentUpon>OpcItemList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DynamicBoxForm.resx">
+      <DependentUpon>DynamicBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EfficeForm.resx">
+      <DependentUpon>EfficeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditCubeLocation.resx">
+      <DependentUpon>frmEditCubeLocation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLineBoxSearch.resx">
+      <DependentUpon>frmLineBoxSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaterialsForm.resx">
+      <DependentUpon>MaterialsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutPortForm.resx">
+      <DependentUpon>OutPortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutPortTransferForm.resx">
+      <DependentUpon>OutPortTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SLogoForm.resx">
+      <DependentUpon>SLogoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TaskList.resx">
+      <DependentUpon>TaskList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolView\DummyOutputWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DummyOutputWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FJMainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FJMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BHMainForm.resx">
+      <DependentUpon>BHMainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InPortForm.resx">
+      <DependentUpon>InPortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm.resx">
+      <DependentUpon>WaitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PutPortForm.resx">
+      <DependentUpon>PutPortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="CONFIG\AppConfig.config" />
+    <None Include="CONFIG\BMenu.config" />
+    <None Include="CONFIG\DefaultDockPanel.config" />
+    <None Include="CONFIG\DockPanel.config" />
+    <None Include="CONFIG\ScreenStyle.config" />
+    <None Include="CONFIG\SMenu.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\DataSources\BusinessLogic.Box.CigBoxInfoList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.Common.OutPortTransfer.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.Common.SortingLineBoxList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.Configuration.SortingLineList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.DisplayBoards.DynamicBoxTaskList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.Download.SortingLineList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.Download.SubSortingLineList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.Download.TaskBatchList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.INTASKS.InTaskList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.Log.MonitorLogList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.Search.LineBoxProcessList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.SortingProcess.SortingProcessList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.SortingTask.AbnSortingLineTaskDetails.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.SortingTask.AbnSortingLineTaskList.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.SortingTask.SortingLineTaskDetails.datasource" />
+    <None Include="Properties\DataSources\BusinessLogic.SortingTask.SortingLineTaskList.datasource" />
+    <None Include="Properties\DataSources\HDWLogic.arrive.SortingTaskArrives.datasource" />
+    <None Include="Properties\DataSources\HDWLogic.Issued.InTaskIssuedList.datasource" />
+    <None Include="Properties\DataSources\HDWLogic.Issued.SortingTaskIssuedDetails.datasource" />
+    <None Include="Properties\DataSources\HDWLogic.Issued.SortingTaskIssuedList.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ToolView\ToolWindow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ToolView\ToolWindow.Designer.cs">
+      <DependentUpon>ToolWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WaitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitForm.Designer.cs">
+      <DependentUpon>WaitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ArrowDown.bmp" />
+    <None Include="Images\ArrowUp.bmp" />
+    <None Include="Images\Bitmap.ico" />
+    <None Include="Images\BlankIcon.ico" />
+    <None Include="Images\ClosedFolder.ICO" />
+    <None Include="Images\CSFile.ico" />
+    <None Include="Images\CSProject.ico" />
+    <None Include="Images\File.ico" />
+    <None Include="Images\Form.ico" />
+    <None Include="Images\Mouse.bmp" />
+    <None Include="Images\msenv22.ico" />
+    <None Include="Images\New.ico" />
+    <None Include="Images\Open.ico" />
+    <None Include="Images\OpenFolder.ICO" />
+    <None Include="Images\OutputWindow.ico" />
+    <None Include="Images\PropertyWindow.ico" />
+    <None Include="Images\Reference.ico" />
+    <None Include="Images\References.ico" />
+    <None Include="Images\SolutionExplorer.ico" />
+    <None Include="Images\TaskListWindow.ico" />
+    <None Include="Images\ToolboxWindow.ico" />
+    <None Include="Images\XmlFile.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DockPanel.xml" />
+    <EmbeddedResource Include="ToolView\ToolWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolWindow.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="20101015104641777_easyicon_cn_48.ico" />
+    <Content Include="20101015111905685_easyicon_cn_96.ico" />
+    <Content Include="20101023064238348_easyicon_cn_256.ico" />
+    <Content Include="20101023065248981_easyicon_cn_256.ico" />
+    <None Include="Resources\20140808095056944_easyicon_net_48.png" />
+    <None Include="Resources\20140808095108723_easyicon_net_48.png" />
+    <None Include="Resources\20140808095208143_easyicon_net_48.png" />
+    <None Include="Resources\20140808095338424_easyicon_net_48.png" />
+    <None Include="Resources\201408080952081143_easyicon_net_48.png" />
+    <None Include="Resources\2014080810460485_easyicon_net_48.png" />
+    <None Include="Resources\20140808104640855_easyicon_net_48.png" />
+    <None Include="Resources\20140808023923345_easyicon_net_48.png" />
+    <None Include="Resources\20140808024044954_easyicon_net_48.png" />
+    <None Include="Resources\20140808025007957_easyicon_net_48.png" />
+    <None Include="Resources\20140821045042598_easyicon_net_32.png" />
+    <None Include="Resources\dd72f4d07664fc46 %281%29.jpg" />
+    <None Include="Resources\22_03.gif" />
+    <None Include="Resources\22_03.jpg" />
+    <None Include="Resources\22_031.jpg" />
+    <None Include="Resources\21_03.jpg" />
+    <None Include="Resources\22_032.jpg" />
+    <Content Include="2014103008195997_easyicon_net_64.ico" />
+    <None Include="Resources\20141030100358913_easyicon_net_16.png" />
+    <None Include="Resources\20141121050443700_easyicon_net_48.png" />
+    <None Include="Resources\20141121052752504_easyicon_net_47.2.png" />
+    <None Include="Resources\jinyelogo_标准2 - 副本.jpg" />
+    <None Include="Resources\jinyelogo_标准2 - 副本.png" />
+    <None Include="Resources\2014112603030143_easyicon_net_48.png" />
+    <None Include="Resources\20141126043024873_easyicon_net_48.png" />
+    <None Include="Resources\5-130H2191323.gif" />
+    <None Include="Resources\20141201032807942_easyicon_net_48.png" />
+    <None Include="Resources\waitform.png" />
+    <None Include="Resources\led.png" />
+    <Content Include="20141201050815887_easyicon_net_256.ico" />
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\jinyelogo_标准2 - 副本1.png" />
+    <None Include="Resources\登录12_05.png" />
+    <None Include="Resources\20141211091630383_easyicon_net_92.2962962963.png" />
+    <None Include="Resources\20141211103901560_easyicon_net_92.4444444444.png" />
+    <None Include="Resources\20141211105943101_easyicon_net_32.png" />
+    <None Include="Resources\20141211105933692_easyicon_net_32.png" />
+    <None Include="Resources\20150119025824412_easyicon_net_64.png" />
+    <None Include="Resources\Arrow_down_48px_1184716_easyicon.net.png" />
+    <None Include="Resources\Arrow_up_48px_1184719_easyicon.net.png" />
+    <None Include="Resources\Lock_16px_516291_easyicon.net.png" />
+    <None Include="Resources\Lock_Unlock_24px_567610_easyicon.net.png" />
+    <None Include="Resources\A.png" />
+    <None Include="Resources\B.png" />
+    <Content Include="Sound\1.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\10.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\2.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\3.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\4.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\5.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\6.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\7.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\8.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\9.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\下一订单.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\分拣结束.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\卡烟.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\当前订单.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\挂烟.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\缺烟.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sound\订单完成.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="安装必备\CL2005Ocx.ocx" />
+    <Content Include="安装必备\dll\CL2005Ocx.ocx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="安装必备\dll\opccomn_ps.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="安装必备\dll\OPCDAAuto.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="安装必备\dll\opchda_ps.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="安装必备\dll\opcproxy.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="安装必备\dll\opc_aeps.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="安装必备\IBM.Data.DB2.dll" />
+    <Content Include="安装必备\log4net.dll" />
+    <Content Include="安装必备\MySql.Data.dll" />
+    <Content Include="安装必备\VistTime.dll" />
+    <None Include="Resources\2010102303430562_easyicon_cn_16.png" />
+    <None Include="Resources\20101023034309624_easyicon_cn_16.png" />
+    <None Include="Resources\20101023034753876_easyicon_cn_24.png" />
+    <None Include="Resources\20101023035948464_easyicon_cn_32.png" />
+    <None Include="Resources\Uscreen.png" />
+    <None Include="Resources\Lscreen.png" />
+    <None Include="Resources\20101103034532729_easyicon_cn_16.png" />
+    <Content Include="安装必备\Csla.dll" />
+    <Content Include="安装必备\DotNetBar v8.8.0.0.exe" />
+    <None Include="Resources\20101022104014910_easyicon_cn_96.png" />
+    <None Include="Resources\201010221009522_easyicon_cn_32.png" />
+    <None Include="Resources\Transparent24.png" />
+    <None Include="Resources\20101022100132958_easyicon_cn_32.png" />
+    <None Include="Resources\未标题-1.png" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\20101020083307850_easyicon_cn_24.png" />
+    <None Include="Resources\20101020083300358_easyicon_cn_24.png" />
+    <None Include="Resources\index2_top_bg08263.jpg" />
+    <None Include="Resources\index2_top_bg08262.jpg" />
+    <None Include="Resources\162.png" />
+    <None Include="Resources\42.png" />
+    <None Include="Resources\22.png" />
+    <None Include="Resources\12.png" />
+    <None Include="Resources\view_nofullscreen.png" />
+    <None Include="Resources\view_fullscreen.png" />
+    <None Include="Resources\view_choose1.png" />
+    <None Include="Resources\document_properties.png" />
+    <None Include="Resources\windows71.png" />
+    <None Include="Resources\visitaglass1.png" />
+    <None Include="Resources\office2010blue1.png" />
+    <None Include="Resources\office2010black2.png" />
+    <None Include="Resources\office2007silver1.png" />
+    <None Include="Resources\office2007blue1.png" />
+    <None Include="Resources\office2007black1.png" />
+    <None Include="Resources\offic2010silver1.png" />
+    <None Include="Resources\office2010black1.png" />
+    <None Include="Resources\windows7.png" />
+    <None Include="Resources\visitaglass.png" />
+    <None Include="Resources\office2010blue.png" />
+    <None Include="Resources\office2010black.png" />
+    <None Include="Resources\office2007silver.png" />
+    <None Include="Resources\office2007blue.png" />
+    <None Include="Resources\office2007black.png" />
+    <None Include="Resources\offic2010silver.png" />
+    <None Include="Resources\ball_yellow.png" />
+    <None Include="Resources\ball_red.png" />
+    <None Include="Resources\ball_green.png" />
+    <None Include="Resources\20101015125647328_easyicon_cn_64.png" />
+    <None Include="Resources\20101015125639593_easyicon_cn_64.png" />
+    <None Include="Resources\20101014111020307_easyicon_cn_32.png" />
+    <None Include="Resources\20101014111014579_easyicon_cn_32.png" />
+    <None Include="Resources\20101014105647925_easyicon_cn_32.png" />
+    <None Include="Resources\20101013121850576_easyicon_cn_64.png" />
+    <None Include="Resources\20101013102354725_easyicon_cn_64.png" />
+    <None Include="Resources\20101013102336755_easyicon_cn_64.png" />
+    <None Include="Resources\20101012084640878_easyicon_cn_48.png" />
+    <None Include="Resources\20101012083929969_easyicon_cn_32.png" />
+    <None Include="Resources\20101012083406242_easyicon_cn_32.png" />
+    <None Include="Resources\20101012082745609_easyicon_cn_48.png" />
+    <None Include="Resources\20101012082627362_easyicon_cn_16.png" />
+    <None Include="Resources\20101012082614960_easyicon_cn_16.png" />
+    <None Include="Resources\20101012082558443_easyicon_cn_32.png" />
+    <None Include="Resources\20101012082550176_easyicon_cn_32.png" />
+    <None Include="Resources\20101012082541820_easyicon_cn_32.png" />
+    <None Include="Resources\20101012082527610_easyicon_cn_32.png" />
+    <None Include="Resources\20101012082519509_easyicon_cn_32.png" />
+    <None Include="Resources\20101012082511995_easyicon_cn_32.png" />
+    <None Include="Resources\2010101208275135_easyicon_cn_64.png" />
+    <None Include="Resources\2010101208260672_easyicon_cn_32.png" />
+    <None Include="Resources\201010120801431000_easyicon_cn_32.png" />
+    <None Include="Resources\20101012081712584_easyicon_cn_32.png" />
+    <None Include="Resources\20101012081512537_easyicon_cn_32.png" />
+    <None Include="Resources\20101012081437653_easyicon_cn_32.png" />
+    <None Include="Resources\20101012075538848_easyicon_cn_32.png" />
+    <None Include="Resources\setstyle.jpg" />
+    <None Include="Resources\history.png" />
+    <None Include="Resources\history1.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\win7.png" />
+    <None Include="Resources\vista.png" />
+    <None Include="Resources\office2010 silver.png" />
+    <None Include="Resources\office2010 blue.png" />
+    <None Include="Resources\office2010 black.png" />
+    <None Include="Resources\office2007 silver.png" />
+    <None Include="Resources\office2007 blue.png" />
+    <None Include="Resources\office2007 black.png" />
+    <None Include="Resources\tobacoo.jpg" />
+    <None Include="Resources\Vista Glass.png" />
+    <None Include="Resources\Office10 saliver.png" />
+    <None Include="Resources\office10 blue.png" />
+    <None Include="Resources\office10 black.png" />
+    <None Include="Resources\Office saliver.png" />
+    <None Include="Resources\office blue.png" />
+    <None Include="Resources\office black.png" />
+    <None Include="Resources\index2_top_bg08261.jpg" />
+    <None Include="Resources\kedit.png" />
+    <None Include="Resources\view_remove.png" />
+    <None Include="Resources\view_left_right.png" />
+    <None Include="Resources\view_choose.png" />
+    <None Include="Resources\playlist.png" />
+    <None Include="Resources\kmenu.png" />
+    <None Include="Resources\file_cancel.png" />
+    <None Include="Resources\advancedsettings.png" />
+    <None Include="Resources\exit16.png" />
+    <None Include="Resources\exit2.png" />
+    <None Include="Resources\exit1.png" />
+    <None Include="Resources\exit.png" />
+    <None Include="Resources\161.png" />
+    <None Include="Resources\41.png" />
+    <None Include="Resources\21.png" />
+    <None Include="Resources\11.png" />
+    <None Include="Resources\16.png" />
+    <None Include="Resources\4.png" />
+    <None Include="Resources\2.png" />
+    <None Include="Resources\1.png" />
+    <None Include="安装必备\dll\自动注册sdk.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="安装必备\DSDRIVER32_ENGLISH.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppUtility\AppUtility.csproj">
+      <Project>{CA223CCE-2974-4B73-B724-7810DD1A723A}</Project>
+      <Name>AppUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{4CAFAE2C-355E-4E99-BD89-1A5997D5AA16}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HDWLogic\HDWLogic.csproj">
+      <Project>{870CF810-4171-410D-92E7-00109D31ACB1}</Project>
+      <Name>HDWLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LablePrint\LablePrint.csproj">
+      <Project>{2B20D0AC-DAF9-4965-B10B-179786E6549A}</Project>
+      <Name>LablePrint</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlcContract\PlcContract.csproj">
+      <Project>{7F3ADEA7-2D27-41F2-B440-43E5993B53A6}</Project>
+      <Name>PlcContract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxCL2005OCXLib">
+      <Guid>{4F705C60-AE8A-45D8-9C0A-6EBD0758B8EC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="CL2005OCXLib">
+      <Guid>{4F705C60-AE8A-45D8-9C0A-6EBD0758B8EC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using AppUtility;
+using BusinessLogic.SortingTask;
+using MonitorMain.CustomContorl;
+
+namespace MonitorMain
+{
+    public partial class TaskList : Form
+    {
+        public TaskList()
+        {
+            InitializeComponent();
+        }
+
+        private void TaskList_Load(object sender, EventArgs e)
+        {
+            DataGridViewTranslation.LoadMainColHeader(dgviewnone);
+            DataGridViewTranslation.LoadDetailColHeader(dgviewnonedetail);
+
+            dgviewnonedetail.DataSource = null;
+
+
+            SortingLineTaskList sortingLineTaskList1 = SortingLineTaskList.GetFinSortingLineTaskList(new QueryCondition("3", true, AppUtil._SortingLineId,"desc"));
+            
+            dgviewnone.DataSource = sortingLineTaskList1;
+
+        }
+
+        private void dgviewnone_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+
+                dgviewnonedetail.DataSource = SortingLineTaskDetails.GetSortingLineTaskDetailsByTaskId(dgviewnone.SelectedRows[0].Cells[0].Value.ToString()); 
+                
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }
+    }
+}

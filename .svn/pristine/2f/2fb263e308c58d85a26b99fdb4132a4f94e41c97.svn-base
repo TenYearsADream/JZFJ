@@ -1,0 +1,400 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using Csla;
+using log4net.Config;
+using MySql.Data.MySqlClient;
+
+
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+
+namespace BusinessLogic
+{
+    [Serializable]
+    public class MonitorLog : BusinessBase<MonitorLog>
+    {
+        #region  Business Methods
+
+        private static PropertyInfo<string> IdProperty = RegisterProperty<string>(o => o.ID, "标识号");
+
+        public string ID
+        {
+            get { return GetProperty(IdProperty); }
+            private set { LoadProperty(IdProperty, value); }
+        }
+
+        private static PropertyInfo<string> LOGNOProperty = RegisterProperty<string>(o => o.LOGNO, "日志-故障代码");
+
+        public string LOGNO
+        {
+            get { return GetProperty(LOGNOProperty); }
+            set { SetProperty(LOGNOProperty, value); }
+        }
+
+        private static PropertyInfo<string> LOGNAMEProperty = RegisterProperty<string>(o => o.LOGNAME, "日志-故障名称");
+        /// <summary>
+        /// 1数据库读取
+        /// 2系统信息
+        /// 
+        /// </summary>
+        public string LOGNAME
+        {
+            get { return GetProperty(LOGNAMEProperty); }
+            set { SetProperty(LOGNAMEProperty, value); }
+        }
+
+        private static PropertyInfo<string> LOGLOCATIONProperty = RegisterProperty<string>(o => o.LOGLOCATION, "产生位置");
+
+        public string LOGLOCATION
+        {
+            get { return GetProperty(LOGLOCATIONProperty); }
+            set { SetProperty(LOGLOCATIONProperty, value); }
+        }
+
+        private static PropertyInfo<string> LOGINFOProperty = RegisterProperty<string>(o => o.LOGINFO, "日志-故障描述");
+
+        public string LOGINFO
+        {
+            get { return GetProperty(LOGINFOProperty); }
+            set { SetProperty(LOGINFOProperty, value); }
+        }
+
+        private static PropertyInfo<DateTime> CREATETIMEProperty = RegisterProperty<DateTime>(o => o.CREATETIME, "开始时间");
+
+        public DateTime CREATETIME
+        {
+            get { return GetProperty(CREATETIMEProperty); }
+            set { SetProperty(CREATETIMEProperty, value); }
+        }
+
+        private static PropertyInfo<string> PROCESSMODEProperty = RegisterProperty<string>(o => o.PROCESSMODE, "处理办法");
+
+        public string PROCESSMODE
+        {
+            get { return GetProperty(PROCESSMODEProperty); }
+            set { SetProperty(PROCESSMODEProperty, value); }
+        }
+
+        private static PropertyInfo<int> LOGTYPEProperty = RegisterProperty<int>(o => o.LOGTYPE, "日志类型");
+
+        public int LOGTYPE
+        {
+            get { return GetProperty(LOGTYPEProperty); }
+            set { SetProperty(LOGTYPEProperty, value); }
+        }
+
+        private static PropertyInfo<string> SortingLineCodeProperty = RegisterProperty<string>(o => o.SortingLineCode, "日志类型");
+
+        public string SortingLineCode
+        {
+            get { return GetProperty(SortingLineCodeProperty); }
+            set { SetProperty(SortingLineCodeProperty, value); }
+        }
+
+
+        private static PropertyInfo<string> CREATEDATEProperty = RegisterProperty<string>(o => o.CREATEDATE, "记录日期");
+
+        public string CREATEDATE
+        {
+            get { return GetProperty(CREATEDATEProperty); }
+            set { SetProperty(CREATEDATEProperty, value); }
+        }
+
+
+        public string TypeName
+        {
+            get
+            {
+                if (LOGTYPE == 0)
+                {
+                    return "Info";
+                }
+                if (LOGTYPE == 1)
+                {
+                    return "Alert";
+                }
+                if (LOGTYPE == 2)
+                {
+                    return "Error";
+                }
+                return "";
+            }
+            
+        }
+
+        public Color LogColor
+        {
+            get
+            {
+                if (LOGTYPE == 0)
+                {
+                    return Color.Black;
+                }
+                if (LOGTYPE == 1)
+                {
+                    return Color.DodgerBlue;
+                }
+                if (LOGTYPE == 2)
+                {
+                    return Color.Red;
+                }
+                return Color.Black;
+            }
+        }
+
+        public override MonitorLog Save()
+	    {
+            log4net.ILog log = log4net.LogManager.GetLogger(typeof(MonitorLog));
+            log.Info(LOGNAME + "    " + LOGINFO);
+            LogCreate(CREATETIME, LOGNAME, LOGINFO, TypeName, LogColor);
+	        return this;
+	    }
+
+        #endregion
+
+        #region  Business Rules
+
+        protected override void AddBusinessRules()
+        {
+
+        }
+
+
+
+        #endregion
+
+        #region  Authorization Rules
+
+        protected void AddAuthorizationRules()
+        {
+            // add AuthorizationRules here
+        }
+
+        protected static void AddObjectAuthorizationRules()
+        {
+            // add object-level authorization rules here
+        }
+
+        #endregion
+
+        #region  Factory Methods
+
+        public static MonitorLog NewMonitorLog()
+        {
+            return DataPortal.Create<MonitorLog>();
+        }
+
+        public static MonitorLog GetMonitorLogById(string ID)
+        {
+            return DataPortal.Fetch<MonitorLog>(new SingleCriteria<MonitorLog, string>(ID));
+        }
+
+        //public static void DeleteMonitorLog(string id)
+        //{
+        //    DataPortal.Delete(new SingleCriteria<MonitorLog, string>(id));
+        //}
+
+        private MonitorLog()
+        {
+            /* require use of factory methods */
+        }
+
+        #endregion
+
+        #region  Data Access
+
+        [RunLocal]
+        protected void DataPortal_Create(MonitorLog MonitorLog)
+        {
+            using (BypassPropertyChecks)
+            {
+                //LoadProperty(IdProperty, MonitorLog.ID);
+                //LoadProperty(LOGNOProperty, MonitorLog.LOGNO);
+                //LoadProperty(LOGNAMEProperty, MonitorLog.LOGNAME);
+                //LoadProperty(LOGLOCATIONProperty, MonitorLog.LOGLOCATION);
+                //LoadProperty(CREATETIMEProperty, MonitorLog.CREATETIME);
+                //LoadProperty(PROCESSMODEProperty, MonitorLog.PROCESSMODE);
+                //LoadProperty(LOGTYPEProperty, MonitorLog.LOGTYPE);
+                //LoadProperty(CREATEDATEProperty, MonitorLog.CREATEDATE);
+            }
+        }
+
+        [RunLocal]
+        protected override void DataPortal_Create()
+        {
+            using (BypassPropertyChecks)
+            {
+                LoadProperty(IdProperty, Guid.NewGuid().ToString());
+                LoadProperty(CREATETIMEProperty, DateTime.Now);
+                LoadProperty(CREATEDATEProperty, DateTime.Now.ToShortDateString());
+            }
+        }
+
+        private void DataPortal_Fetch(SingleCriteria<MonitorLog, string> criteria)
+        {
+            using (BypassPropertyChecks)
+            {
+                using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+                {
+                    cn.Open();
+                    using (var cm = cn.CreateCommand())
+                    {
+                        cm.CommandText = "SELECT * FROM T_MONITORLOG WHERE ID = @id";
+                        cm.Parameters.AddWithValue("@id", criteria.Value);
+                        using (var dr = new Csla.Data.SafeDataReader(cm.ExecuteReader()))
+                        {
+                            dr.Read();
+                            ID = dr.GetString("ID");
+                            LOGNO = dr.GetString("LOGNO");
+                            LOGNAME = dr.GetString("LOGNAME");
+                            LOGINFO = dr.GetString("LOGINFO");
+                            LOGLOCATION = dr.GetString("LOGLOCATION");
+                            CREATETIME = dr.GetDateTime("CREATETIME");
+                            PROCESSMODE = dr.GetString("PROCESSMODE");
+                            LOGTYPE = dr.GetInt32("LOGTYPE");
+                            CREATEDATE = dr.GetString("CREATEDATE");
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        [Transactional(TransactionalTypes.Manual)]
+        protected override void DataPortal_Insert()
+        {
+            using (BypassPropertyChecks)
+            {
+                using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+               {
+                    cn.Open();
+
+                   using (var cm = cn.CreateCommand())
+                   {
+                       StringBuilder SQL = new StringBuilder();
+                       SQL.Append("INSERT ");
+                       SQL.Append("   INTO T_MONITORLOG ");
+                       SQL.Append("        ( ");
+                       SQL.Append("            ID,LOGNO,LOGNAME,LOGINFO,LOGLOCATION,CREATETIME,PROCESSMODE,LOGTYPE,DATE ");
+                       SQL.Append("        ) ");
+                       SQL.Append("        VALUES ");
+                       SQL.Append("        ( ");
+                       SQL.Append("            @ID,@LOGNO,@LOGNAME,@LOGINFO,@LOGLOCATION,@CREATETIME,@PROCESSMODE,@LOGTYPE,@CREATEDATE ");
+                       SQL.Append("        )");
+                       cm.CommandText = SQL.ToString();
+                       cm.Parameters.AddWithValue("@ID", ID);
+                       cm.Parameters.AddWithValue("@LOGNO", LOGNO);
+                       cm.Parameters.AddWithValue("@LOGNAME", LOGNAME);
+                       cm.Parameters.AddWithValue("@LOGINFO", LOGINFO);
+                       cm.Parameters.AddWithValue("@LOGLOCATION", LOGLOCATION);
+                       cm.Parameters.AddWithValue("@CREATETIME", CREATETIME);
+                       cm.Parameters.AddWithValue("@PROCESSMODE", PROCESSMODE);
+                       cm.Parameters.AddWithValue("@LOGTYPE", LOGTYPE);
+                       cm.Parameters.AddWithValue("@CREATEDATE", CREATEDATE);
+                       cm.ExecuteNonQuery();
+                   }
+                            
+                   LogCreate(CREATETIME, LOGNAME, LOGINFO, TypeName,LogColor);
+               }
+            }
+        }
+
+        [Transactional(TransactionalTypes.Manual)]
+        protected override void DataPortal_Update()
+        {
+            using (BypassPropertyChecks)
+            {
+                using (var cn = new MySqlConnection(AppUtility.AppUtil._LocalConnectionString))
+                {
+                    cn.Open();
+                    using (var tran = cn.BeginTransaction())
+                    {
+                        try
+                        {
+                            using (var cm = cn.CreateCommand())
+                            {
+                                StringBuilder SQL = new StringBuilder();
+                                SQL.Append("UPDATE T_MONITORLOG ");
+                                SQL.Append("    SET ID = @ID,LOGNO = @LOGNO,LOGNAME = @LOGNAME,LOGINFO = @LOGINFO,LOGLOCATION = @LOGLOCATION,CREATETIME = @CREATETIME,PROCESSMODE = @PROCESSMODE,LOGTYPE = @LOGTYPE,DATE = @CREATEDATE ");
+                                SQL.Append("  WHERE ID = @ID");
+
+                                cm.CommandText = SQL.ToString();
+                                cm.Parameters.AddWithValue("@ID", ID);
+                                cm.Parameters.AddWithValue("@LOGNO", LOGNO);
+                                cm.Parameters.AddWithValue("@LOGNAME", LOGNAME);
+                                cm.Parameters.AddWithValue("@LOGINFO", LOGINFO);
+                                cm.Parameters.AddWithValue("@LOGLOCATION", LOGLOCATION);
+                                cm.Parameters.AddWithValue("@CREATETIME", CREATETIME);
+                                cm.Parameters.AddWithValue("@PROCESSMODE", PROCESSMODE);
+                                cm.Parameters.AddWithValue("@LOGTYPE", LOGTYPE);
+                                cm.Parameters.AddWithValue("@CREATEDATE", CREATEDATE);
+                                cm.ExecuteNonQuery();
+                            }
+
+                            tran.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            tran.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        #endregion
+
+        #region Event
+        //定义事件
+        static public event EventHandler<DataEvenArgs> OnLogCreate;
+        //监视事件
+        protected void LogCreate(DateTime createtime, string logname,string loginfo,string type,Color color)
+        {
+            if (OnLogCreate != null)
+            {
+                OnLogCreate(null, new DataEvenArgs(createtime, logname,loginfo,type,color));
+            }
+        }
+        #endregion
+
+
+    }
+
+    public class DataEvenArgs : EventArgs
+    {
+        public DateTime Createtime;
+        public string Logname;
+        public string Loginfo;
+        public string Type;
+        public Color Color;
+
+        public DataEvenArgs(DateTime createtime, string logname, string loginfo, string type,Color color)
+        {
+            Createtime = createtime;
+            Logname = logname;
+            Loginfo = loginfo;
+            Type = type;
+            Color = color;
+        }
+    }
+
+
+    public class StepNameEvenArgs : EventArgs
+    {
+        
+        public string Stepname { get; set; }
+        public string Sortinglinename { get; set; }
+
+        public StepNameEvenArgs(string sortinglinename,string stepname)
+        {
+            Sortinglinename = sortinglinename;
+            Stepname = stepname;
+        }
+    }
+}

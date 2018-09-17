@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace BusinessLogic.Box
+{
+    public class SendBoxList
+    {
+        static public Queue<SendBoxInfo> FirstSendBoxInfos = new Queue<SendBoxInfo>();
+        static public Queue<SendBoxInfo> SecondSendBoxInfos = new Queue<SendBoxInfo>();
+    }
+}

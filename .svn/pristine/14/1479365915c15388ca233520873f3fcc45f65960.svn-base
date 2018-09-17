@@ -1,0 +1,20 @@
+<sidebar name="ToolboxBar" style="7" app="0" psc="1" fontname="宋体" fontemsize="9" fontstyle="0" width="188" height="489">
+  <items>
+    <item assembly="DevComponents.DotNetBar2, PublicKeyToken=e116d99a00eca71b" class="DevComponents.DotNetBar.SideBarPanelItem" name="" globalname="" text="  补货查询" iscontainer="true" visible="true" itemdata="" enabled="true" begingroup="false" style="7" desc="" tooltip="" category="" cancustomize="true" showsubitems="true" itemalignment="0" stretch="false" global="true" themes="false">
+      <subitems>
+        <item assembly="DevComponents.DotNetBar2, PublicKeyToken=e116d99a00eca71b" class="DevComponents.DotNetBar.ButtonItem" name="wintask" globalname="" text="补货任务查询" iscontainer="false" visible="true" itemdata="MonitorMain.CustomContorl.Search.CInSearch" enabled="true" begingroup="false" style="7" desc="" tooltip="" category="" cancustomize="true" showsubitems="true" itemalignment="0" stretch="false" global="true" themes="false" PopupType="0" PopupWidth="200" PersonalizedMenus="0" panim="1" ImagePosition="2" ButtonStyle="2" Checked="false" VerticalPadding="0" HorizontalPadding="0" MenuVisibility="0" RecentlyUsed="false">
+          <images imageindex="1" />
+        </item>
+        <item assembly="DevComponents.DotNetBar2, PublicKeyToken=e116d99a00eca71b" class="DevComponents.DotNetBar.ButtonItem" name="CLineBoxSearch" globalname="" text="烟仓补货进度查询" iscontainer="false" visible="true" itemdata="MonitorMain.CustomContorl.Search.CLineBoxSearch" enabled="true" begingroup="false" style="7" desc="" tooltip="" category="" cancustomize="true" showsubitems="true" itemalignment="0" stretch="false" global="true" themes="false" PopupType="0" PopupWidth="200" PersonalizedMenus="0" panim="1" ImagePosition="2" ButtonStyle="2" Checked="false" VerticalPadding="0" HorizontalPadding="0" MenuVisibility="0" RecentlyUsed="false">
+          <images imageindex="1" />
+        </item>        
+        <item assembly="DevComponents.DotNetBar2, PublicKeyToken=e116d99a00eca71b" class="DevComponents.DotNetBar.ButtonItem" name="CLogSearch" globalname="" text="日志查询" iscontainer="false" visible="true" itemdata="MonitorMain.CustomContorl.Search.CLogSearch" enabled="true" begingroup="false" style="7" desc="" tooltip="" category="" cancustomize="true" showsubitems="true" itemalignment="0" stretch="false" global="true" themes="false" PopupType="0" PopupWidth="200" PersonalizedMenus="0" panim="1" ImagePosition="2" ButtonStyle="2" Checked="false" VerticalPadding="0" HorizontalPadding="0" MenuVisibility="0" RecentlyUsed="false">
+          <images imageindex="1" />
+        </item>
+        <item assembly="DevComponents.DotNetBar2, PublicKeyToken=e116d99a00eca71b" class="DevComponents.DotNetBar.ButtonItem" name="OpcItemList" globalname="" text="OPC监控" iscontainer="false" visible="true" itemdata="MonitorMain.CustomContorl.OpcItemList" enabled="true" begingroup="false" style="7" desc="" tooltip="" category="" cancustomize="true" showsubitems="true" itemalignment="0" stretch="false" global="true" themes="false" PopupType="0" PopupWidth="200" PersonalizedMenus="0" panim="1" ImagePosition="2" ButtonStyle="2" Checked="false" VerticalPadding="0" HorizontalPadding="0" MenuVisibility="0" RecentlyUsed="false">
+          <images imageindex="1" />
+        </item>
+      </subitems>
+    </item>
+  </items>
+</sidebar>

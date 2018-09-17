@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <PrintSetting>
+    <Post>LPT1</Post>
+    <IsBigFont>True</IsBigFont>
+    <IsTitle>True</IsTitle>
+    <PrintHeight>40</PrintHeight>
+    <BlankHeight>5</BlankHeight>
+    <IsPageturn>False</IsPageturn>
+  </PrintSetting>
+  <LEDSetting>
+  </LEDSetting>
+  <OrderSetting>
+  </OrderSetting>
+</configuration>

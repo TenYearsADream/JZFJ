@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4CAFAE2C-355E-4E99-BD89-1A5997D5AA16}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BusinessLogic</RootNamespace>
+    <AssemblyName>BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\BusinessLogic.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\BusinessLogic.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'New|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\New\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\BusinessLogic.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'New|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\New\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\BusinessLogic.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;E:\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Csla, Version=3.8.4.0, Culture=neutral, PublicKeyToken=93be5fdc093e4c30, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DockSample\安装必备\Csla.dll</HintPath>
+    </Reference>
+    <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=MSIL">
+      <HintPath>..\DockSample\安装必备\IBM.Data.DB2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\DockSample\安装必备\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=5.2.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DockSample\安装必备\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="arrive\SortingTaskArrive.cs" />
+    <Compile Include="arrive\SortingTaskArrives.cs" />
+    <Compile Include="Box\CigBoxInfo.cs" />
+    <Compile Include="Box\CigBoxInfoList.cs" />
+    <Compile Include="Box\BoxProgress.cs" />
+    <Compile Include="Box\SendBoxInfo.cs" />
+    <Compile Include="Box\SendBoxList.cs" />
+    <Compile Include="Common\CigInfo.cs" />
+    <Compile Include="Common\CigInfoList.cs" />
+    <Compile Include="Common\CRC.cs" />
+    <Compile Include="Common\OutPortTransfer.cs" />
+    <Compile Include="Common\SortingLine.cs" />
+    <Compile Include="Common\SortingLineBox.cs" />
+    <Compile Include="Common\SortingLineBoxList.cs" />
+    <Compile Include="Common\SortingSubLine.cs" />
+    <Compile Include="Configuration\Setting.cs" />
+    <Compile Include="Configuration\Settings.cs" />
+    <Compile Include="DisplayBoards\LedDisplay.cs" />
+    <Compile Include="DisplayBoards\OutPort.cs" />
+    <Compile Include="DisplayBoards\DynamicBoxTask.cs" />
+    <Compile Include="DisplayBoards\DynamicBoxTaskList.cs" />
+    <Compile Include="Issued\InTaskIssued.cs" />
+    <Compile Include="Issued\InTaskIssuedList.cs" />
+    <Compile Include="Issued\SortingTaskIssued.cs" />
+    <Compile Include="Issued\SortingTaskIssuedDetail.cs" />
+    <Compile Include="Issued\SortingTaskIssuedDetails.cs" />
+    <Compile Include="Issued\SortingTaskIssuedList.cs" />
+    <Compile Include="Log\SortingError.cs" />
+    <Compile Include="materials\Materials.cs" />
+    <Compile Include="materials\MaterialsDetailList.cs" />
+    <Compile Include="materials\MaterialsDetial.cs" />
+    <Compile Include="materials\MaterialsList.cs" />
+    <Compile Include="PlcDataSettings\PLCDataInfo.cs" />
+    <Compile Include="PlcDataSettings\PLCDataInfoList.cs" />
+    <Compile Include="PrintBarcode\PrintBarCodes.cs" />
+    <Compile Include="Print\PrintInfo.cs" />
+    <Compile Include="Print\PrintRow.cs" />
+    <Compile Include="Print\PrintSetting.cs" />
+    <Compile Include="Print\PrintSettings.cs" />
+    <Compile Include="Print\PrintType.cs" />
+    <Compile Include="Search\LineBoxProcessInfo.cs" />
+    <Compile Include="Search\LineBoxProcessList.cs" />
+    <Compile Include="Search\QueryBuilder.cs" />
+    <Compile Include="Search\SortingCigInfo.cs" />
+    <Compile Include="Search\SortingCigInfoList.cs" />
+    <Compile Include="Search\SearchArgs.cs" />
+    <Compile Include="Search\SortingLine.cs" />
+    <Compile Include="Search\SortingLineList.cs" />
+    <Compile Include="Download\DownloadData.cs" />
+    <Compile Include="Search\TaskBatch.cs" />
+    <Compile Include="Search\TaskBatchList.cs" />
+    <Compile Include="InTasks\InTask.cs" />
+    <Compile Include="InTasks\InTaskList.cs" />
+    <Compile Include="InTasks\InTaskProgress.cs" />
+    <Compile Include="Log\MonitorLog.cs" />
+    <Compile Include="Log\MonitorLogInfo.cs" />
+    <Compile Include="Log\MonitorLogList.cs" />
+    <Compile Include="Messages\Message.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messages\MessageInfo.cs" />
+    <Compile Include="Messages\MessageList.cs" />
+    <Compile Include="Log\OperationLog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\SubSortingLine.cs" />
+    <Compile Include="Search\SubSortingLineList.cs" />
+    <Compile Include="SortingProcess\SortingProcessInfo.cs" />
+    <Compile Include="SortingProcess\SortingProcessList.cs" />
+    <Compile Include="SortingTask\ABNORMAL\AbnSortingLineTask.cs" />
+    <Compile Include="SortingTask\ABNORMAL\AbnSortingLineTaskDetail.cs" />
+    <Compile Include="SortingTask\ABNORMAL\AbnSortingLineTaskDetails.cs" />
+    <Compile Include="SortingTask\ABNORMAL\AbnSortingLineTaskList.cs" />
+    <Compile Include="SortingTask\ABNORMAL\AbnSortingTaskProgress.cs" />
+    <Compile Include="SortingTask\Cube.cs" />
+    <Compile Include="SortingTask\SortingLineTask.cs" />
+    <Compile Include="SortingTask\SortingLineTaskDetail.cs" />
+    <Compile Include="SortingTask\SortingLineTaskDetails.cs" />
+    <Compile Include="SortingTask\SortingLineTaskList.cs" />
+    <Compile Include="SortingTask\SortingLineTaskQueue.cs" />
+    <Compile Include="SortingTask\SortingProgress.cs" />
+    <Compile Include="SortingTask\SortingTaskProgress.cs" />
+    <Compile Include="SortingTask\SortingLineTaskDetailsHistroy.cs" />
+    <Compile Include="Test\CreateTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppUtility\AppUtility.csproj">
+      <Project>{CA223CCE-2974-4B73-B724-7810DD1A723A}</Project>
+      <Name>AppUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ConfigFile\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Box\Box.cd" />
+    <None Include="Entities.csp" />
+    <None Include="InTasks\Intasks.cd" />
+    <None Include="Download\DownloadData.cd" />
+    <None Include="DisplayBoards\DisplayBoards.cd" />
+    <None Include="Common\Common.cd" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\BusinessLogic.Search.SortingCigInfoList.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

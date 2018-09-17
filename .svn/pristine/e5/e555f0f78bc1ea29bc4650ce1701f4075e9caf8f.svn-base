@@ -1,0 +1,231 @@
+﻿using System.Windows.Forms;
+
+namespace MonitorMain.CustomContorl
+{
+    partial class C_SortingMain
+    {
+        /// <summary> 
+        /// 必需的设计器变量。
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// 清理所有正在使用的资源。
+        /// </summary>
+        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region 组件设计器生成的代码
+
+        /// <summary> 
+        /// 设计器支持所需的方法 - 不要
+        /// 使用代码编辑器修改此方法的内容。
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelEx1 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelEx4 = new DevComponents.DotNetBar.PanelEx();
+            this.btnissued = new DevComponents.DotNetBar.ButtonX();
+            this.btnrefresh = new DevComponents.DotNetBar.ButtonX();
+            this.chkshowname = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.chkshowqty = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.panel3.SuspendLayout();
+            this.panelEx1.SuspendLayout();
+            this.panelEx4.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.tableLayoutPanel1);
+            this.panel3.Controls.Add(this.panelEx1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(1161, 464);
+            this.panel3.TabIndex = 2;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 289);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1161, 175);
+            this.tableLayoutPanel1.TabIndex = 6;
+            // 
+            // panelEx1
+            // 
+            this.panelEx1.ColumnCount = 1;
+            this.panelEx1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.68056F));
+            this.panelEx1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.31944F));
+            this.panelEx1.Controls.Add(this.flowLayoutPanel1, 0, 1);
+            this.panelEx1.Controls.Add(this.panelEx4);
+            this.panelEx1.Controls.Add(this.flowLayoutPanel2, 1, 1);
+            this.panelEx1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx1.Location = new System.Drawing.Point(0, 0);
+            this.panelEx1.Name = "panelEx1";
+            this.panelEx1.RowCount = 3;
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0423F));
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.21151F));
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.panelEx1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.panelEx1.Size = new System.Drawing.Size(1161, 289);
+            this.panelEx1.TabIndex = 5;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 33);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1155, 123);
+            this.flowLayoutPanel1.TabIndex = 0;
+            // 
+            // panelEx4
+            // 
+            this.panelEx4.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.SetColumnSpan(this.panelEx4, 2);
+            this.panelEx4.Controls.Add(this.btnissued);
+            this.panelEx4.Controls.Add(this.btnrefresh);
+            this.panelEx4.Controls.Add(this.chkshowname);
+            this.panelEx4.Controls.Add(this.chkshowqty);
+            this.panelEx4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelEx4.Location = new System.Drawing.Point(3, 3);
+            this.panelEx4.Name = "panelEx4";
+            this.panelEx4.Size = new System.Drawing.Size(1155, 24);
+            this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx4.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.panelEx4.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.panelEx4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.panelEx4.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.panelEx4.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.panelEx4.Style.GradientAngle = 90;
+            this.panelEx4.TabIndex = 8;
+            // 
+            // btnissued
+            // 
+            this.btnissued.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnissued.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnissued.Image = global::MonitorMain.Properties.Resources._20140808095338424_easyicon_net_48;
+            this.btnissued.ImageFixedSize = new System.Drawing.Size(16, 16);
+            this.btnissued.Location = new System.Drawing.Point(287, 2);
+            this.btnissued.Name = "btnissued";
+            this.btnissued.Size = new System.Drawing.Size(69, 20);
+            this.btnissued.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnissued.TabIndex = 2;
+            this.btnissued.Text = "可下达";
+            this.btnissued.Click += new System.EventHandler(this.btnissued_Click);
+            // 
+            // btnrefresh
+            // 
+            this.btnrefresh.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnrefresh.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnrefresh.Image = global::MonitorMain.Properties.Resources._20101012082627362_easyicon_cn_16;
+            this.btnrefresh.Location = new System.Drawing.Point(208, 2);
+            this.btnrefresh.Name = "btnrefresh";
+            this.btnrefresh.Size = new System.Drawing.Size(60, 20);
+            this.btnrefresh.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnrefresh.TabIndex = 2;
+            this.btnrefresh.Text = "刷新";
+            this.btnrefresh.Click += new System.EventHandler(this.btnrefresh_Click);
+            // 
+            // chkshowname
+            // 
+            this.chkshowname.AutoSize = true;
+            // 
+            // 
+            // 
+            this.chkshowname.BackgroundStyle.Class = "";
+            this.chkshowname.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.chkshowname.Location = new System.Drawing.Point(6, 5);
+            this.chkshowname.Name = "chkshowname";
+            this.chkshowname.Size = new System.Drawing.Size(76, 18);
+            this.chkshowname.TabIndex = 1;
+            this.chkshowname.Text = "显示品牌";
+            this.chkshowname.CheckedChanged += new System.EventHandler(this.chkshowname_CheckedChanged);
+            // 
+            // chkshowqty
+            // 
+            this.chkshowqty.AutoSize = true;
+            // 
+            // 
+            // 
+            this.chkshowqty.BackgroundStyle.Class = "";
+            this.chkshowqty.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.chkshowqty.Location = new System.Drawing.Point(103, 5);
+            this.chkshowqty.Name = "chkshowqty";
+            this.chkshowqty.Size = new System.Drawing.Size(76, 18);
+            this.chkshowqty.TabIndex = 1;
+            this.chkshowqty.Text = "显示容量";
+            this.chkshowqty.CheckedChanged += new System.EventHandler(this.chkshowqty_CheckedChanged);
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 162);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(1155, 124);
+            this.flowLayoutPanel2.TabIndex = 13;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 2000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // C_SortingMain
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panel3);
+            this.Name = "C_SortingMain";
+            this.Size = new System.Drawing.Size(1161, 464);
+            this.Load += new System.EventHandler(this.C_SortingMain_Load);
+            this.panel3.ResumeLayout(false);
+            this.panelEx1.ResumeLayout(false);
+            this.panelEx4.ResumeLayout(false);
+            this.panelEx4.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel panel3;
+        private TableLayoutPanel panelEx1;
+        private DevComponents.DotNetBar.PanelEx panelEx4;
+        private DevComponents.DotNetBar.Controls.CheckBoxX chkshowname;
+        private DevComponents.DotNetBar.Controls.CheckBoxX chkshowqty;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private FlowLayoutPanel flowLayoutPanel2;
+        private TableLayoutPanel tableLayoutPanel1;
+        private DevComponents.DotNetBar.ButtonX btnrefresh;
+        private DevComponents.DotNetBar.ButtonX btnissued;
+        private Timer timer1;
+       
+    }
+}
